@@ -246,7 +246,6 @@
             margin-bottom: 1.5rem;
         }
 
-        
         @media (max-width: 480px) {
             .points-counter {
                 font-size: 0.7rem !important;
@@ -451,257 +450,285 @@
 
 
     <script>
-        // Indian Time Zone Helper
-        const getIndianTime = () => {
-            const offset = 5.5 * 60 * 60 * 1000; // IST offset (5h 30m)
-            return new Date(Date.now() + offset);
-        };
+    // Indian Time Zone Helper
+    const getIndianTime = () => {
+        const offset = 5.5 * 60 * 60 * 1000; // IST offset (5h 30m)
+        return new Date(Date.now() + offset);
+    };
 
-        let state = {
-            loops: JSON.parse(localStorage.getItem('loops')) || [],
-            dailyLog: JSON.parse(localStorage.getItem('dailyLog')) || [],
-            totalPoints: parseInt(localStorage.getItem('totalPoints')) || 0,
-            streak: parseInt(localStorage.getItem('streak')) || 0,
-            lastUpdated: localStorage.getItem('lastUpdated') || ''
-        };
+    let state = {
+        loops: JSON.parse(localStorage.getItem('loops')) || [],
+        dailyLog: JSON.parse(localStorage.getItem('dailyLog')) || [],
+        totalPoints: parseInt(localStorage.getItem('totalPoints')) || 0,
+        streak: parseInt(localStorage.getItem('streak')) || 0,
+        lastUpdated: localStorage.getItem('lastUpdated') || ''
+    };
 
-        const audio = {
-            positive: new Audio('https://assets.mixkit.co/active_storage/sfx/257/257-preview.mp3'),
-            negative: new Audio('https://assets.mixkit.co/active_storage/sfx/259/259-preview.mp3'),
-            achievement: new Audio('https://assets.mixkit.co/active_storage/sfx/2958/2958-preview.mp3')
-        };
+    const audio = {
+        positive: new Audio('https://assets.mixkit.co/active_storage/sfx/257/257-preview.mp3'),
+        negative: new Audio('https://assets.mixkit.co/active_storage/sfx/259/259-preview.mp3'),
+        achievement: new Audio('https://assets.mixkit.co/active_storage/sfx/2958/2958-preview.mp3')
+    };
 
-        function saveState() {
-            localStorage.setItem('loops', JSON.stringify(state.loops));
-            localStorage.setItem('dailyLog', JSON.stringify(state.dailyLog));
-            localStorage.setItem('totalPoints', state.totalPoints);
-            localStorage.setItem('streak', state.streak);
-            localStorage.setItem('lastUpdated', state.lastUpdated);
+    function saveState() {
+        localStorage.setItem('loops', JSON.stringify(state.loops));
+        localStorage.setItem('dailyLog', JSON.stringify(state.dailyLog));
+        localStorage.setItem('totalPoints', state.totalPoints);
+        localStorage.setItem('streak', state.streak);
+        localStorage.setItem('lastUpdated', state.lastUpdated);
+    }
+
+    // Notification System Functions
+    function isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    function checkOrientation() {
+        const alert = document.querySelector('.mobile-alert');
+        if (isMobile() && window.innerHeight > window.innerWidth) {
+            alert.style.display = 'block';
+        } else {
+            alert.style.display = 'none';
+        }
+    }
+
+    function dismissAlert() {
+        document.querySelector('.mobile-alert').style.display = 'none';
+        localStorage.setItem('landscapeAlertDismissed', 'true');
+    }
+
+    // Initialization Code
+    document.addEventListener('DOMContentLoaded', function() {
+        updateUI();
+
+        if (!localStorage.getItem('landscapeAlertDismissed')) {
+            checkOrientation();
         }
 
-        function addLoop() {
-            const input = document.getElementById('loopInput');
-            const type = document.getElementById('loopType').value;
-
-            if (!input.value.trim()) return;
-
-            const newLoop = {
-                id: Date.now(),
-                name: input.value.trim(),
-                type: type,
-                created: getIndianTime().toISOString(),
-                completions: []
-            };
-
-            state.loops.push(newLoop);
-
-            const today = getIndianTime().toISOString().split('T')[0];
-            if (state.lastUpdated === today) {
-                state.streak++;
-            } else {
-                state.streak = 1;
+        window.addEventListener('pageshow', function(event) {
+            if (localStorage.getItem('landscapeAlertDismissed')) {
+                document.querySelector('.mobile-alert').style.display = 'none';
             }
+        });
+    });
 
-            state.lastUpdated = today;
-            audio[type].play();
-            if (type === 'positive') confetti({ particleCount: 100, spread: 70 });
+    // Event Listeners for Orientation Changes
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
 
-            input.value = '';
+    // Rest of Application Functions (unchanged)
+    function addLoop() {
+        const input = document.getElementById('loopInput');
+        const type = document.getElementById('loopType').value;
+
+        if (!input.value.trim()) return;
+
+        const newLoop = {
+            id: Date.now(),
+            name: input.value.trim(),
+            type: type,
+            created: getIndianTime().toISOString(),
+            completions: []
+        };
+
+        state.loops.push(newLoop);
+        const today = getIndianTime().toISOString().split('T')[0];
+
+        if (state.lastUpdated === today) {
+            state.streak++;
+        } else {
+            state.streak = 1;
+        }
+
+        state.lastUpdated = today;
+        audio[type].play();
+        if (type === 'positive') confetti({ particleCount: 100, spread: 70 });
+
+        input.value = '';
+        saveState();
+        updateUI();
+    }
+
+    function completeLoop(id) {
+        const loop = state.loops.find(l => l.id === id);
+        const today = getIndianTime().toISOString().split('T')[0];
+
+        if (!loop.completions.includes(today)) {
+            loop.completions.push(today);
+            updateDailyPoints(today, loop.type);
             saveState();
             updateUI();
         }
+    }
 
-        function completeLoop(id) {
-            const loop = state.loops.find(l => l.id === id);
-            const today = getIndianTime().toISOString().split('T')[0];
+    function updateDailyPoints(date, type) {
+        let dailyEntry = state.dailyLog.find(entry => entry.date === date);
 
-            if (!loop.completions.includes(today)) {
-                loop.completions.push(today);
-                updateDailyPoints(today, loop.type);
-                saveState();
-                updateUI();
-            }
+        if (!dailyEntry) {
+            dailyEntry = { date, positive: 0, negative: 0, points: 0 };
+            state.dailyLog.push(dailyEntry);
         }
 
-        function updateDailyPoints(date, type) {
-            let dailyEntry = state.dailyLog.find(entry => entry.date === date);
+        if (type === 'positive') dailyEntry.positive++;
+        else dailyEntry.negative++;
 
-            if (!dailyEntry) {
-                dailyEntry = {
-                    date,
-                    positive: 0,
-                    negative: 0,
-                    points: 0
-                };
-                state.dailyLog.push(dailyEntry);
-            }
+        const total = dailyEntry.positive + dailyEntry.negative;
+        dailyEntry.points = total > 0 ? Math.min(Math.round((dailyEntry.positive / total) * 10), 10) : 0;
+        state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
+    }
 
-            if (type === 'positive') dailyEntry.positive++;
-            else dailyEntry.negative++;
+    function deleteLoop(id) {
+        state.loops = state.loops.filter(l => l.id !== id);
+        saveState();
+        updateUI();
+    }
 
-            const total = dailyEntry.positive + dailyEntry.negative;
-            dailyEntry.points = total > 0
-                ? Math.min(Math.round((dailyEntry.positive / total) * 10), 10)
-                : 0;
+    function exportCSV() {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "LIFE LOOPS DATA EXPORT\n";
+        csvContent += `Exported At,${getIndianTime().toISOString()}\n\n`;
+        csvContent += "SUMMARY\n";
+        csvContent += `Total Points,${state.totalPoints}\n`;
+        csvContent += `Current Streak,${state.streak} days\n`;
+        csvContent += `Last Updated,${state.lastUpdated}\n\n`;
+        csvContent += "ACTIVE LOOPS\nID,Type,Name,Created Date,Completion Dates\n";
+        state.loops.forEach(loop => {
+            csvContent += `${loop.id},${loop.type.toUpperCase()},${loop.name},${loop.created},"${loop.completions.join(', ')}"\n`;
+        });
+        csvContent += "\nDAILY PROGRESS\nDate,✅ Positive,❌ Negative,⭐ Points (0-10)\n";
+        state.dailyLog.forEach(day => {
+            csvContent += `${day.date},${day.positive},${day.negative},${day.points}\n`;
+        });
 
-            state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
-        }
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `life_loops_${getIndianTime().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
-        function deleteLoop(id) {
-            state.loops = state.loops.filter(l => l.id !== id);
-            saveState();
-            updateUI();
-        }
+    function importCSV(event) {
+        const file = event.target.files[0];
+        if (!file) return;
 
-        function exportCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,";
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const csvData = e.target.result.split('\n');
+            const newState = { loops: [], dailyLog: [], totalPoints: 0, streak: 0, lastUpdated: '' };
 
-            // Header Section
-            csvContent += "LIFE LOOPS DATA EXPORT\n";
-            csvContent += `Exported At,${getIndianTime().toISOString()}\n\n`;
-
-            // Summary Section
-            csvContent += "SUMMARY\n";
-            csvContent += `Total Points,${state.totalPoints}\n`;
-            csvContent += `Current Streak,${state.streak} days\n`;
-            csvContent += `Last Updated,${state.lastUpdated}\n\n`;
-
-            // Active Loops Section
-            csvContent += "ACTIVE LOOPS\n";
-            csvContent += "ID,Type,Name,Created Date,Completion Dates\n";
-            state.loops.forEach(loop => {
-                csvContent += `${loop.id},${loop.type.toUpperCase()},${loop.name},${loop.created},"${loop.completions.join(', ')}"\n`;
-            });
-
-            // Daily Progress Section
-            csvContent += "\nDAILY PROGRESS\n";
-            csvContent += "Date,✅ Positive,❌ Negative,⭐ Points (0-10)\n";
-            state.dailyLog.forEach(day => {
-                csvContent += `${day.date},${day.positive},${day.negative},${day.points}\n`;
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `life_loops_${getIndianTime().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function importCSV(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const csvData = e.target.result.split('\n');
-                const newState = {
-                    loops: [],
-                    dailyLog: [],
-                    totalPoints: 0,
-                    streak: 0,
-                    lastUpdated: ''
-                };
-
-                let currentSection = '';
-
-                csvData.forEach(line => {
-                    if (line.startsWith('LIFE LOOPS')) currentSection = 'header';
-                    else if (line.startsWith('SUMMARY')) currentSection = 'summary';
-                    else if (line.startsWith('ACTIVE LOOPS')) currentSection = 'loops';
-                    else if (line.startsWith('DAILY PROGRESS')) currentSection = 'daily';
-                    else if (line.trim() === '') return;
-                    else {
-                        switch(currentSection) {
-                            case 'summary':
-                                const [summaryKey, summaryValue] = line.split(',');
-                                if (summaryKey === 'Total Points') newState.totalPoints = parseInt(summaryValue);
-                                if (summaryKey === 'Current Streak') newState.streak = parseInt(summaryValue);
-                                if (summaryKey === 'Last Updated') newState.lastUpdated = summaryValue;
-                                break;
-
-                            case 'loops':
-                                const [id, type, name, created, completions] = line.split(',');
-                                newState.loops.push({
-                                    id: parseInt(id),
-                                    type: type.toLowerCase(),
-                                    name,
-                                    created,
-                                    completions: completions
-                                        ? completions.replace(/"/g, '').split(', ').filter(d => d)
-                                        : []
-                                });
-                                break;
-
-                            case 'daily':
-                                const [date, positive, negative, points] = line.split(',');
-                                newState.dailyLog.push({
-                                    date,
-                                    positive: parseInt(positive),
-                                    negative: parseInt(negative),
-                                    points: parseInt(points)
-                                });
-                                break;
-                        }
+            let currentSection = '';
+            csvData.forEach(line => {
+                if (line.startsWith('LIFE LOOPS')) currentSection = 'header';
+                else if (line.startsWith('SUMMARY')) currentSection = 'summary';
+                else if (line.startsWith('ACTIVE LOOPS')) currentSection = 'loops';
+                else if (line.startsWith('DAILY PROGRESS')) currentSection = 'daily';
+                else if (line.trim() === '') return;
+                else {
+                    switch(currentSection) {
+                        case 'summary':
+                            const [summaryKey, summaryValue] = line.split(',');
+                            if (summaryKey === 'Total Points') newState.totalPoints = parseInt(summaryValue);
+                            if (summaryKey === 'Current Streak') newState.streak = parseInt(summaryValue);
+                            if (summaryKey === 'Last Updated') newState.lastUpdated = summaryValue;
+                            break;
+                        case 'loops':
+                            const [id, type, name, created, completions] = line.split(',');
+                            newState.loops.push({
+                                id: parseInt(id),
+                                type: type.toLowerCase(),
+                                name,
+                                created,
+                                completions: completions ? completions.replace(/"/g, '').split(', ').filter(d => d) : []
+                            });
+                            break;
+                        case 'daily':
+                            const [date, positive, negative, points] = line.split(',');
+                            newState.dailyLog.push({
+                                date,
+                                positive: parseInt(positive),
+                                negative: parseInt(negative),
+                                points: parseInt(points)
+                            });
+                            break;
                     }
-                });
+                }
+            });
 
-                state = newState;
-                saveState();
-                updateUI();
-                alert('Data imported successfully! 🎉');
-            };
-            reader.readAsText(file);
+            state = newState;
+            saveState();
+            updateUI();
+            alert('Data imported successfully! 🎉');
+        };
+        reader.readAsText(file);
+    }
+
+    function updateUI() {
+        const today = getIndianTime().toISOString().split('T')[0];
+        const todayData = state.dailyLog.find(d => d.date === today) || { points: 0 };
+
+        document.getElementById('dailyPoints').textContent = todayData.points;
+        document.getElementById('totalPoints').textContent = state.totalPoints;
+        document.getElementById('streak').textContent = `${state.streak} days`;
+        document.getElementById('positiveCount').textContent = state.loops.filter(l => l.type === 'positive').length;
+        document.getElementById('negativeCount').textContent = state.loops.filter(l => l.type === 'negative').length;
+
+        const tableBody = document.getElementById('loopTableBody');
+        tableBody.innerHTML = state.loops.map(loop => `
+            <tr>
+                <td>${loop.type === 'positive' ? '✅' : '❌'}</td>
+                <td>${loop.name}</td>
+                <td>
+                    ${loop.completions.slice(-3).map(d =>
+                        `<span class="nes-badge">
+                            <span class="is-success">${new Date(d).toLocaleDateString('en-IN')}</span>
+                        </span>`
+                    ).join('')}
+                </td>
+                <td>
+                    <div class="actions-column">
+                        <button class="nes-btn is-success" onclick="completeLoop(${loop.id})">✔️</button>
+                        <button class="nes-btn is-error" onclick="deleteLoop(${loop.id})">🗑️</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+
+        // Add these new functions for mobile detection
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        function updateUI() {
-            const today = getIndianTime().toISOString().split('T')[0];
-            const todayData = state.dailyLog.find(d => d.date === today) || { points: 0 };
-
-            document.getElementById('dailyPoints').textContent = todayData.points;
-            document.getElementById('totalPoints').textContent = state.totalPoints;
-            document.getElementById('streak').textContent = `${state.streak} days`;
-            document.getElementById('positiveCount').textContent =
-                state.loops.filter(l => l.type === 'positive').length;
-            document.getElementById('negativeCount').textContent =
-                state.loops.filter(l => l.type === 'negative').length;
-
-            const tableBody = document.getElementById('loopTableBody');
-            tableBody.innerHTML = state.loops.map(loop => `
-                <tr>
-                    <td>${loop.type === 'positive' ? '✅' : '❌'}</td>
-                    <td>${loop.name}</td>
-                    <td>
-                        ${loop.completions.slice(-3).map(d =>
-                            `<span class="nes-badge">
-                                <span class="is-success">${new Date(d).toLocaleDateString('en-IN')}</span>
-                            </span>`
-                        ).join('')}
-                    </td>
-                    <td>
-                        <div class="actions-column">
-                            <button class="nes-btn is-success" onclick="completeLoop(${loop.id})">✔️</button>
-                            <button class="nes-btn is-error" onclick="deleteLoop(${loop.id})">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+        function checkOrientation() {
+            const alert = document.querySelector('.mobile-alert');
+            if (isMobile() && window.innerHeight > window.innerWidth) {
+                alert.style.display = 'block';
+            } else {
+                alert.style.display = 'none';
+            }
         }
 
+        function dismissAlert() {
+            document.querySelector('.mobile-alert').style.display = 'none';
+            localStorage.setItem('landscapeAlertDismissed', 'true');
+        }
 
         // Add orientation change listener
         window.addEventListener('resize', checkOrientation);
         window.addEventListener('orientationchange', checkOrientation);
 
-        // ✅ CORRECT INITIALIZATION ✅
-        document.addEventListener('DOMContentLoaded', function() {
-            updateUI();
-            if (!localStorage.getItem('landscapeAlertDismissed')) {
-                checkOrientation();
-            }
-        });
+        // Modify initial load section to check orientation
+        // Initial load
+        updateUI();
+        if (!localStorage.getItem('landscapeAlertDismissed')) {
+            checkOrientation();
+        }
 
+        // Initial load
+        updateUI();
     </script>
 </body>
 </html>
