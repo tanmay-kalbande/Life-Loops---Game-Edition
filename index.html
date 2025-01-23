@@ -203,47 +203,45 @@
             100% { transform: translateY(0); }
         }
 
-        @media (min-width: 480px) {
-            body {
-                font-size: 12px;
-                padding: 24px;
+        @media (max-width: 480px) {
+            .points-counter {
+                font-size: 0.65rem !important;
+                padding: 0.6rem !important;
+                flex-wrap: wrap;
+                gap: 0.3rem;
+                line-height: 1.2;
+                text-align: center;
             }
 
-            .container {
-                max-width: 800px;
-                gap: 1.8rem;
+            .points-counter span {
+                display: inline-block;
+                min-width: 2.5em;
+                padding: 0 0.2em;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 3px;
             }
 
-            .nes-table {
-                font-size: 11px;
+            .points-counter::before {
+                content: " ";
+                flex-basis: 100%;
+                text-align: center;
             }
 
-            .main-title {
-                font-size: 1.8rem;
-            }
-
-            .title-icon {
-                font-size: 2.2rem;
-            }
-
-            .nes-container {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 375px) {
-            .game-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .main-title {
-                font-size: 1.1rem;
+            .points-counter br {
+                display: inline;
+                content: " ";
             }
         }
 
-        .section-spacing {
-            margin-bottom: 1.5rem;
+        @media (max-width: 340px) {
+            .points-counter {
+                font-size: 0.6rem !important;
+                padding: 0.4rem !important;
+            }
+
+            .points-counter span {
+                min-width: 2.2em;
+            }
         }
 
         /* Arcade-style Notification */
@@ -333,8 +331,8 @@
 </head>
 <body>
 
-  <div class="mobile-alert crt-style">
-      <span>Tip: Switch to landscape mode to enhance your Vivibelty experience!</span>
+  <div class="mobile-alert crt-style" style="display: none;">
+      <span>Tip: Switch to landscape mode for better visibility!</span>
       <button class="close-btn nes-btn is-error" onclick="dismissAlert()">⏻</button>
   </div>
 
