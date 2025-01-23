@@ -203,19 +203,65 @@
             100% { transform: translateY(0); }
         }
 
+        @media (min-width: 480px) {
+            body {
+                font-size: 12px;
+                padding: 24px;
+            }
+
+            .container {
+                max-width: 800px;
+                gap: 1.8rem;
+            }
+
+            .nes-table {
+                font-size: 11px;
+            }
+
+            .main-title {
+                font-size: 1.8rem;
+            }
+
+            .title-icon {
+                font-size: 2.2rem;
+            }
+
+            .nes-container {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .game-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .main-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        .section-spacing {
+            margin-bottom: 1.5rem;
+        }
+
+        
         @media (max-width: 480px) {
             .points-counter {
-                font-size: 0.65rem !important;
-                padding: 0.6rem !important;
+                font-size: 0.7rem !important;
+                padding: 0.5rem !important;
+                white-space: normal !important;
+                line-height: 1.4;
+                /* Add these from first version */
                 flex-wrap: wrap;
                 gap: 0.3rem;
-                line-height: 1.2;
                 text-align: center;
             }
 
             .points-counter span {
                 display: inline-block;
-                min-width: 2.5em;
+                min-width: 2.2em;
                 padding: 0 0.2em;
                 background: rgba(255, 255, 255, 0.9);
                 border-radius: 3px;
@@ -224,12 +270,6 @@
             .points-counter::before {
                 content: " ";
                 flex-basis: 100%;
-                text-align: center;
-            }
-
-            .points-counter br {
-                display: inline;
-                content: " ";
             }
         }
 
@@ -238,11 +278,8 @@
                 font-size: 0.6rem !important;
                 padding: 0.4rem !important;
             }
-
-            .points-counter span {
-                min-width: 2.2em;
-            }
         }
+
 
         /* Arcade-style Notification */
         .mobile-alert.arcade-style {
@@ -411,6 +448,7 @@
             <input type="file" id="importInput" hidden accept=".csv" onchange="importCSV(event)">
         </div>
     </div>
+
 
     <script>
         // Indian Time Zone Helper
@@ -652,38 +690,18 @@
         }
 
 
-        // Add these new functions for mobile detection
-        function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
-
-        function checkOrientation() {
-            const alert = document.querySelector('.mobile-alert');
-            if (isMobile() && window.innerHeight > window.innerWidth) {
-                alert.style.display = 'block';
-            } else {
-                alert.style.display = 'none';
-            }
-        }
-
-        function dismissAlert() {
-            document.querySelector('.mobile-alert').style.display = 'none';
-            localStorage.setItem('landscapeAlertDismissed', 'true');
-        }
-
         // Add orientation change listener
         window.addEventListener('resize', checkOrientation);
         window.addEventListener('orientationchange', checkOrientation);
 
-        // Modify initial load section to check orientation
-        // Initial load
-        updateUI();
-        if (!localStorage.getItem('landscapeAlertDismissed')) {
-            checkOrientation();
-        }
+        // ✅ CORRECT INITIALIZATION ✅
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUI();
+            if (!localStorage.getItem('landscapeAlertDismissed')) {
+                checkOrientation();
+            }
+        });
 
-        // Initial load
-        updateUI();
     </script>
 </body>
 </html>
