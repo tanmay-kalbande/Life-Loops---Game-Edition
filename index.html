@@ -246,122 +246,96 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Arcade Machine Notification Style */
-        .mobile-alert {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2c3e50;
-            color: #f1c40f;
-            padding: 15px 25px;
-            border: 3px solid #e74c3c;
+        /* Arcade-style Notification */
+        .mobile-alert.arcade-style {
+            background: #1a1a1a;
+            border: 3px solid #ffd700;
             border-radius: 8px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            color: #ffd700;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.7rem;
-            max-width: 90%;
-            box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
-            animation: alertPulse 1.5s infinite;
+            padding: 15px 25px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            width: 80%;
+            text-align: center;
+            animation: glow 1.5s infinite alternate;
         }
 
-        @keyframes alertPulse {
-            0% { box-shadow: 0 0 10px rgba(231, 76, 60, 0.4); }
-            50% { box-shadow: 0 0 20px rgba(231, 76, 60, 0.6); }
-            100% { box-shadow: 0 0 10px rgba(231, 76, 60, 0.4); }
-        }
-
-        .mobile-alert::before {
+        .mobile-alert.arcade-style::before {
             content: '🕹️';
-            font-size: 1.5rem;
-            filter: drop-shadow(2px 2px 0 #000);
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
         }
 
-        .mobile-alert .close-btn {
-            background: #e74c3c;
+        .mobile-alert.arcade-style .close-btn {
+            background: #ff0000;
             border: 2px solid #000;
             border-radius: 50%;
-            color: white;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: 'Press Start 2P', cursive;
-            box-shadow: 2px 2px 0 #000;
-            position: relative;
-        }
-
-        .mobile-alert .close-btn:hover {
-            background: #c0392b;
-            transform: scale(0.95);
-            box-shadow: 1px 1px 0 #000;
-        }
-
-        .mobile-alert .close-btn::after {
-            content: '';
+            width: 25px;
+            height: 25px;
+            font-size: 0.8rem;
             position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border: 2px solid #f1c40f;
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            top: -10px;
+            right: -10px;
+            box-shadow: 2px 2px 0 #000;
+            transition: all 0.2s ease;
         }
 
-        .mobile-alert .close-btn:hover::after {
-            opacity: 1;
+        .mobile-alert.arcade-style .close-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: #ff4444;
         }
 
-        /* CRT Screen Effect */
-        @media (max-width: 768px) {
-            .mobile-alert {
-                background:
-                    linear-gradient(
-                        rgba(0, 0, 0, 0.1) 50%,
-                        rgba(0, 0, 0, 0.2) 50%
-                    ),
-                    linear-gradient(
-                        90deg,
-                        rgba(0, 0, 0, 0.1) 50%,
-                        rgba(0, 0, 0, 0.2) 50%
-                    );
-                background-size: 5px 5px;
-                text-shadow: 2px 2px 0 #000;
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
             }
         }
 
-        /* Pixel Border Animation */
-        @keyframes pixelBorder {
-            0% { border-color: #e74c3c; }
-            25% { border-color: #f1c40f; }
-            50% { border-color: #2ecc71; }
-            75% { border-color: #3498db; }
-            100% { border-color: #e74c3c; }
+        /* CRT Screen Effect */
+        .mobile-alert.crt-style {
+            background: #000;
+            color: #0f0;
+            border: 3px solid #0f0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .mobile-alert {
-            animation:
-                alertPulse 1.5s infinite,
-                pixelBorder 3s infinite;
+        .mobile-alert.crt-style::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(0, 255, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            animation: scanline 2s linear infinite;
+        }
+
+        @keyframes scanline {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
         }
 
     </style>
 </head>
 <body>
 
-  <div class="mobile-alert nes-container is-rounded">
-      🎮 ROTATE DEVICE TO LANDSCAPE!
-      <button class="close-btn nes-btn is-error" onclick="dismissAlert()">✕</button>
+  <div class="mobile-alert crt-style">
+      <span>Tip: Switch to landscape mode to enhance your Vivibelty experience!</span>
+      <button class="close-btn nes-btn is-error" onclick="dismissAlert()">⏻</button>
   </div>
 
     <div class="container">
