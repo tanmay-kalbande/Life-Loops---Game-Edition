@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/WebApplication">
+
 <head>
     <!-- Primary Meta Tags -->
     <meta charset="UTF-8">
@@ -21,7 +22,9 @@
 
     <!-- Vercel Analytics (Optional) -->
     <script>
-      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+        window.va = window.va || function() {
+            (window.vaq = window.vaq || []).push(arguments);
+        };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 
@@ -55,11 +58,13 @@
         }
 
         html {
-            font-size: 10px; /* Base font size for rem units */
+            font-size: 10px;
+            /* Base font size for rem units */
         }
 
         body {
-            background: #202020 url('data:image/svg+xml,%3Csvg width="6" height="6" viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23404040" fill-opacity="0.4" fill-rule="evenodd"%3E%3Cpath d="M5 0h1L0 6V5zM6 5v1H5z"/%3E%3C/g%3E%3C/svg%3E'); /* Subtle dark pattern */
+            background: #202020 url('data:image/svg+xml,%3Csvg width="6" height="6" viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23404040" fill-opacity="0.4" fill-rule="evenodd"%3E%3Cpath d="M5 0h1L0 6V5zM6 5v1H5z"/%3E%3C/g%3E%3C/svg%3E');
+            /* Subtle dark pattern */
             padding: 1.5rem 1rem;
             font-family: 'Press Start 2P', cursive;
             line-height: 1.6;
@@ -69,12 +74,13 @@
 
         /* Container */
         .container {
-            max-width: 600px; /* Slightly wider max for better card layout */
+            max-width: 600px;
             margin: 0 auto;
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 2rem; /* Increased gap */
+            gap: 2rem;
+            /* Increased gap */
         }
 
         /* Header */
@@ -94,15 +100,20 @@
         }
 
         .main-title {
-            font-size: 2rem; /* Larger title */
-            color: #e74c3c; /* NES red */
+            font-size: 2rem;
+            color: #e74c3c;
+            /* NES red */
             text-shadow: 3px 3px 0 #000;
             animation: titleGlow 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes titleGlow {
-            from { text-shadow: 3px 3px 0 #000, 0 0 5px #ff9900; }
-            to { text-shadow: 3px 3px 0 #000, 0 0 15px #ffcc00, 0 0 20px #ffcc00; }
+            from {
+                text-shadow: 3px 3px 0 #000, 0 0 5px #ff9900;
+            }
+            to {
+                text-shadow: 3px 3px 0 #000, 0 0 15px #ffcc00, 0 0 20px #ffcc00;
+            }
         }
 
         .title-icon {
@@ -111,8 +122,13 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
         }
 
         /* Points Counter */
@@ -120,29 +136,33 @@
             padding: 1rem 1.5rem;
             background: #fff;
             border: 4px solid #000;
-            border-radius: 0; /* NES style */
+            border-radius: 0;
+            /* NES style */
             box-shadow: 4px 4px 0 #000;
             font-size: 1.2rem;
-            display: inline-flex; /* Use inline-flex */
+            display: inline-flex;
             align-items: center;
             gap: 1rem;
             color: #212529;
-            flex-wrap: wrap; /* Allow wrapping */
-            justify-content: center; /* Center items when wrapped */
+            flex-wrap: wrap;
+            /* Allow wrapping */
+            justify-content: center;
+            /* Center items when wrapped */
         }
 
         .points-counter span {
             font-weight: bold;
-            color: #e74c3c; /* NES red for numbers */
-            min-width: 1.5em; /* Ensure space for numbers */
+            color: #e74c3c;
+            /* NES red for numbers */
+            min-width: 1.5em;
+            /* Ensure space for numbers */
             text-align: center;
         }
 
         .points-counter i.nes-icon.star,
         .points-counter i.nes-icon.trophy {
-             margin-right: 0.5rem;
+            margin-right: 0.5rem;
         }
-
 
         /* Add Loop Section */
         .add-loop-section {
@@ -156,15 +176,22 @@
         .nes-field {
             margin-bottom: 1rem;
         }
+
         .nes-field:last-of-type {
-            margin-bottom: 1.5rem; /* More space before button */
+            margin-bottom: 1.5rem;
+            /* More space before button */
         }
 
-        .nes-input, .nes-select select { /* Target select element inside nes-select */
-            font-size: 1.2rem; /* Slightly larger input text */
+        .nes-input,
+        .nes-select select {
+            /* Target select element inside nes-select */
+            font-size: 1.2rem;
+            /* Slightly larger input text */
             padding: 1rem;
-            width: 100%; /* Ensure full width */
+            width: 100%;
+            /* Ensure full width */
         }
+
         /* Ensure nes-select div takes full width */
         .nes-select {
             width: 100%;
@@ -175,29 +202,36 @@
             padding: 1rem;
             transition: transform 0.1s ease;
         }
-        .nes-btn:active {
-            transform: translateY(2px); /* NES button press effect */
-        }
 
+        .nes-btn:active {
+            transform: translateY(2px);
+            /* NES button press effect */
+        }
 
         /* Loops Container (Card Layout) */
         #loops-container {
             display: grid;
-            grid-template-columns: 1fr; /* Single column by default */
+            grid-template-columns: 1fr;
+            /* Single column by default */
             gap: 1.8rem;
-            min-height: 50px; /* Give it some height even when empty */
+            min-height: 50px;
+            /* Give it some height even when empty */
         }
+
         /* Style for the 'no loops' message */
         #no-loops-message {
-            color: #777; /* Lighter grey */
+            color: #777;
+            /* Lighter grey */
             text-align: center;
             font-size: 1.1rem;
             padding: 2rem 1rem;
-            border: 2px dashed #555; /* Dashed border */
-            display: none; /* Hidden by default, shown via JS */
-            width: 100%; /* Take full width of the grid area */
+            border: 2px dashed #555;
+            /* Dashed border */
+            display: none;
+            /* Hidden by default, shown via JS */
+            width: 100%;
+            /* Take full width of the grid area */
         }
-
 
         /* Loop Card */
         .loop-card {
@@ -210,29 +244,44 @@
             flex-direction: column;
             gap: 1rem;
         }
-        .loop-card.is-positive { border-left: 8px solid #92cc41; /* NES green */}
-        .loop-card.is-negative { border-left: 8px solid #e76e55; /* NES orange/red */}
+
+        .loop-card.is-positive {
+            border-left: 8px solid #92cc41;
+            /* NES green */
+        }
+
+        .loop-card.is-negative {
+            border-left: 8px solid #e76e55;
+            /* NES orange/red */
+        }
 
         .loop-card-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Align items top */
+            align-items: flex-start;
+            /* Align items top */
             gap: 1rem;
             padding-bottom: 0.8rem;
-            border-bottom: 2px dashed #ccc; /* Separator */
+            border-bottom: 2px dashed #ccc;
+            /* Separator */
         }
 
         .loop-card-title {
             font-size: 1.4rem;
-            word-break: break-word; /* Prevent overflow */
-            flex-grow: 1; /* Allow title to take available space */
-            margin-right: 1rem; /* Space before icon */
-            line-height: 1.4; /* Adjust line height for wrapping */
+            word-break: break-word;
+            /* Prevent overflow */
+            flex-grow: 1;
+            /* Allow title to take available space */
+            margin-right: 1rem;
+            /* Space before icon */
+            line-height: 1.4;
+            /* Adjust line height for wrapping */
         }
 
         .loop-card-type {
             font-size: 2rem;
-            flex-shrink: 0; /* Prevent icon from shrinking */
+            flex-shrink: 0;
+            /* Prevent icon from shrinking */
         }
 
         .loop-card-body {
@@ -249,30 +298,46 @@
         }
 
         .loop-history {
-            line-height: 1.8; /* More space for badges */
+            line-height: 1.8;
+            /* More space for badges */
         }
+
         .loop-history .nes-badge {
             font-size: 0.9rem;
             padding: 3px 5px;
             margin-right: 4px;
-            margin-bottom: 4px; /* Space if badges wrap */
-            display: inline-block; /* Ensure margin/padding works */
+            margin-bottom: 4px;
+            /* Space if badges wrap */
+            display: inline-block;
+            /* Ensure margin/padding works */
         }
 
         .loop-card-actions {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem; /* Increased space above actions */
+            margin-top: 1rem;
+            /* Increased space above actions */
         }
 
         .loop-card-actions .nes-btn {
-            flex: 1; /* Make buttons share space */
+            flex: 1;
+            /* Make buttons share space */
             padding: 0.8rem;
             font-size: 1.1rem;
         }
-        .loop-card-actions .nes-btn.is-success { font-size: 1.5rem; line-height: 1; } /* Larger Checkmark */
-        .loop-card-actions .nes-btn.is-error { font-size: 1.3rem; line-height: 1; } /* Larger Bin */
 
+        .loop-card-actions .nes-btn.is-success {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* Larger Checkmark */
+        .loop-card-actions .nes-btn.is-error {
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        /* Larger Bin */
 
         /* Stats Section */
         .stats-section {
@@ -285,12 +350,16 @@
 
         .stats-list dt {
             font-weight: normal;
-            margin-bottom: 0.8rem; /* More space between stats */
+            margin-bottom: 0.8rem;
+            /* More space between stats */
             font-size: 1.2rem;
             display: inline-block;
-            min-width: 15ch; /* Align values */
-            color: #555; /* Dim the label slightly */
+            min-width: 15ch;
+            /* Align values */
+            color: #555;
+            /* Dim the label slightly */
         }
+
         .stats-list dd {
             display: inline-block;
             font-weight: bold;
@@ -299,34 +368,38 @@
             color: #e74c3c;
         }
 
-
         /* Import/Export */
         .file-actions {
             display: flex;
             gap: 1rem;
-            justify-content: center; /* Center buttons */
+            justify-content: center;
+            /* Center buttons */
             margin-top: 1rem;
         }
 
         .file-actions .nes-btn {
             padding: 0.8rem 1.2rem;
             font-size: 1rem;
-            min-width: 120px; /* Give buttons some width */
+            min-width: 120px;
+            /* Give buttons some width */
         }
-
 
         /* Mobile Alert */
         .mobile-alert {
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
             position: fixed;
             bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
             background: #1a1a1a;
-            border: 3px solid #ffd700; /* Gold border */
-            border-radius: 0; /* NES style */
+            border: 3px solid #ffd700;
+            /* Gold border */
+            border-radius: 0;
+            /* NES style */
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            color: #ffd700; /* Gold text */
+            color: #ffd700;
+            /* Gold text */
             font-family: 'Press Start 2P', cursive;
             padding: 1.5rem;
             text-align: center;
@@ -350,23 +423,29 @@
             right: -10px;
             width: 30px;
             height: 30px;
-            padding: 0; /* Remove default padding */
+            padding: 0;
+            /* Remove default padding */
             font-size: 1.5rem;
-            line-height: 28px; /* Center icon vertically */
+            line-height: 28px;
+            /* Center icon vertically */
             border-radius: 50%;
             box-shadow: 2px 2px 0 #000;
         }
 
-         @keyframes alertGlow {
-            from { box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
-            to { box-shadow: 0 0 16px rgba(255, 215, 0, 0.6); }
+        @keyframes alertGlow {
+            from {
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+            }
+            to {
+                box-shadow: 0 0 16px rgba(255, 215, 0, 0.6);
+            }
         }
-
 
         /* Responsive Adjustments */
         @media (min-width: 480px) {
             html {
-                font-size: 11px; /* Slightly larger base on wider screens */
+                font-size: 11px;
+                /* Slightly larger base on wider screens */
             }
             body {
                 padding: 2rem;
@@ -375,15 +454,15 @@
                 font-size: 1.4rem;
             }
             #loops-container {
-                 /* Two columns on slightly wider screens */
+                /* Two columns on slightly wider screens */
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             }
-             #no-loops-message {
+            #no-loops-message {
                 /* Ensure it spans correctly if grid has columns */
                 grid-column: 1 / -1;
             }
             .main-title {
-                 font-size: 2.4rem;
+                font-size: 2.4rem;
             }
             .title-icon {
                 font-size: 3rem;
@@ -391,32 +470,34 @@
         }
 
         @media (min-width: 768px) {
-             html {
+            html {
                 font-size: 12px;
-             }
+            }
             .container {
-                 max-width: 800px; /* Wider container for desktop */
-             }
-             .game-header {
-                flex-direction: row; /* Side-by-side on larger screens */
+                max-width: 800px;
+                /* Wider container for desktop */
+            }
+            .game-header {
+                flex-direction: row;
+                /* Side-by-side on larger screens */
                 justify-content: space-between;
                 align-items: center;
             }
             #loops-container {
                 /* Potentially 3 columns on desktop if space allows */
-                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
         }
-
     </style>
 </head>
+
 <body>
 
-  <!-- Mobile Orientation Alert -->
-  <div class="mobile-alert">
-      <span>Rotate device to Landscape for optimal view!</span>
-      <button class="close-btn nes-btn is-error" onclick="dismissAlert()">X</button>
-  </div>
+    <!-- Mobile Orientation Alert -->
+    <div class="mobile-alert">
+        <span>Rotate device to Landscape for optimal view!</span>
+        <button class="close-btn nes-btn is-error" onclick="dismissAlert()">X</button>
+    </div>
 
     <div class="container">
         <!-- Header -->
@@ -437,25 +518,27 @@
                 <label for="loopInput">Loop Name:</label>
                 <input type="text" id="loopInput" class="nes-input is-dark" placeholder="e.g., Morning Run">
             </div>
-             <div class="nes-field">
+            <div class="nes-field">
                 <label for="loopType">Loop Type:</label>
                 <div class="nes-select is-dark">
-                    <select required id="loopType"> <!-- Added required for basic validation -->
+                    <select required id="loopType">
                         <option value="positive" selected>✅ Positive</option>
                         <option value="negative">❌ Negative</option>
                     </select>
-                 </div>
+                </div>
             </div>
             <button class="nes-btn is-success" onclick="addLoop()">Add Loop</button>
         </section>
 
         <!-- Active Loops (Cards) -->
         <section class="nes-container with-title is-dark">
-             <p class="title">🔄 Active Loops</p>
-             <div id="loops-container">
-                <!-- Loop cards will be dynamically added here -->
-                <p id="no-loops-message">No active loops yet. Add one above!</p>
+            <p class="title">🔄 Active Loops</p>
+            <!-- Container for cards -->
+            <div id="loops-container">
+                <!-- Loop cards will be dynamically added here by updateUI -->
             </div>
+            <!-- Message shown when container is empty -->
+            <p id="no-loops-message" style="display: none;">No active loops yet. Add one above!</p>
         </section>
 
         <!-- Stats -->
@@ -465,7 +548,6 @@
                 <div><dt>🔥 Overall Streak:</dt><dd id="streak">0 days</dd></div>
                 <div><dt>✅ Positive Loops:</dt><dd id="positiveCount">0</dd></div>
                 <div><dt>❌ Negative Loops:</dt><dd id="negativeCount">0</dd></div>
-                <!-- Add more stats here if needed -->
             </dl>
         </section>
 
@@ -483,608 +565,637 @@
     </div>
 
     <script>
-    // --- State Management & Core Logic (Mostly Unchanged) ---
-    const getIndianTime = () => {
-        const now = new Date();
-        const offset = 5.5 * 60 * 60 * 1000;
-        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-        return new Date(utc + offset);
-    };
+        // --- State Management & Core Logic ---
 
-     const getTodayDateString = () => {
-        // Ensures format is always YYYY-MM-DD
-         const date = getIndianTime();
-         const year = date.getFullYear();
-         const month = String(date.getMonth() + 1).padStart(2, '0');
-         const day = String(date.getDate()).padStart(2, '0');
-         return `${year}-${month}-${day}`;
-    };
-
-    let state = {
-        loops: JSON.parse(localStorage.getItem('loops')) || [],
-        dailyLog: JSON.parse(localStorage.getItem('dailyLog')) || [],
-        totalPoints: parseInt(localStorage.getItem('totalPoints')) || 0,
-        streak: parseInt(localStorage.getItem('streak')) || 0,
-        lastUpdatedDate: localStorage.getItem('lastUpdatedDate') || null // Store only the date
-    };
-
-    // Simple audio cache to avoid reloading
-    const audioCache = {};
-    function playSound(type) {
-        const urls = {
-             positive: 'https://assets.mixkit.co/active_storage/sfx/257/257-preview.mp3', // Coin/Success (used for COMPLETING positive)
-             negative: 'https://assets.mixkit.co/active_storage/sfx/259/259-preview.mp3', // Fail/Error (used for COMPLETING negative AND ADDING negative)
-             achievement: 'https://assets.mixkit.co/active_storage/sfx/2958/2958-preview.mp3', // Level up/Big win (used for export/import)
-             add: 'https://assets.mixkit.co/active_storage/sfx/103/103-preview.mp3', // UI interaction sound (used for ADDING positive)
-             delete: 'https://assets.mixkit.co/active_storage/sfx/168/168-preview.mp3' // Item removal sound
-        };
-        if (!urls[type]) return;
-
-        // Create audio object if not cached
-        if (!audioCache[type]) {
-            audioCache[type] = new Audio(urls[type]);
-            audioCache[type].volume = 0.6; // Adjusted volume slightly
-        }
-
-        // Play the sound
-        audioCache[type].currentTime = 0; // Rewind to start
-        audioCache[type].play().catch(e => console.error(`Audio playback failed for type "${type}":`, e));
-    }
-
-    function saveState() {
-        try {
-            localStorage.setItem('loops', JSON.stringify(state.loops));
-            localStorage.setItem('dailyLog', JSON.stringify(state.dailyLog));
-            localStorage.setItem('totalPoints', state.totalPoints);
-            localStorage.setItem('streak', state.streak);
-            localStorage.setItem('lastUpdatedDate', state.lastUpdatedDate);
-        } catch (error) {
-            console.error("Error saving state to localStorage:", error);
-            // Maybe notify user that data couldn't be saved
-        }
-    }
-
-    // --- UI Update & Rendering ---
-
-    function updateUI() {
-        const today = getTodayDateString();
-        // Ensure streak calculation happens *before* display
-        updateStreak(today);
-
-        const todayData = state.dailyLog.find(d => d.date === today) || { points: 0, positive: 0, negative: 0 };
-
-        // Update Header/Stats elements
-        document.getElementById('dailyPoints').textContent = todayData.points;
-        document.getElementById('totalPoints').textContent = state.totalPoints;
-        document.getElementById('streak').textContent = `${state.streak} day${state.streak === 1 ? '' : 's'}`; // Correct pluralization
-        document.getElementById('positiveCount').textContent = state.loops.filter(l => l.type === 'positive').length;
-        document.getElementById('negativeCount').textContent = state.loops.filter(l => l.type === 'negative').length;
-
-        // Render the loop cards
-        renderLoopCards(today);
-
-        // Check mobile orientation alert
-        checkOrientation();
-    }
-
-    function renderLoopCards(today) {
-        const container = document.getElementById('loops-container');
-        const noLoopsMessage = document.getElementById('no-loops-message');
-        if (!container || !noLoopsMessage) {
-             console.error("Loop container or message element not found!");
-             return;
-        }
-        container.innerHTML = ''; // Clear existing cards
-
-        if (state.loops.length === 0) {
-            noLoopsMessage.style.display = 'block'; // Show the message
-        } else {
-            noLoopsMessage.style.display = 'none'; // Hide the message
-
-            // Sort loops maybe? Optional: e.g., by creation date or name
-             state.loops.sort((a, b) => a.created.localeCompare(b.created)); // Example sort by creation date
-
-            state.loops.forEach(loop => {
-                const card = document.createElement('div');
-                card.className = `nes-container is-rounded loop-card is-${loop.type}`; // Add type class for styling
-                card.dataset.loopId = loop.id;
-
-                const loopStreak = calculateLoopStreak(loop.completions, today);
-                const isCompletedToday = loop.completions.includes(today);
-
-                // Limit displayed history, show most recent first
-                const historyDates = loop.completions
-                    .slice(-5) // Show last 5
-                    .sort((a, b) => b.localeCompare(a)) // Sort descending 'YYYY-MM-DD'
-                    .map(d => {
-                        // Format date like 'DD Mon' e.g., '23 Jul'
-                        const dateObj = new Date(d + 'T00:00:00Z'); // Treat as UTC date for consistency
-                        const displayDate = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short'});
-                        return `<span class="nes-badge ${d === today ? 'is-primary' : 'is-dark'}"><span class="${d === today ? 'is-primary' : 'is-dark'}">${displayDate}</span></span>`;
-                     })
-                    .join(' ');
-
-                card.innerHTML = `
-                    <div class="loop-card-header">
-                        <span class="loop-card-title">${loop.name}</span>
-                        <span class="loop-card-type">${loop.type === 'positive' ? '✅' : '❌'}</span>
-                    </div>
-                    <div class="loop-card-body">
-                        <div class="loop-streak">
-                            🔥 Streak: <strong>${loopStreak} day${loopStreak === 1 ? '' : 's'}</strong>
-                        </div>
-                        <div class="loop-history">
-                             History: ${historyDates || '<em style="color:#777;">None yet</em>'}
-                        </div>
-                    </div>
-                    <div class="loop-card-actions">
-                        <button
-                            class="nes-btn ${isCompletedToday ? 'is-disabled' : 'is-success'}"
-                            ${isCompletedToday ? 'disabled' : ''}
-                            onclick="completeLoop(${loop.id}, this)">
-                            ${isCompletedToday ? 'DONE!' : '✔️'}
-                        </button>
-                        <button class="nes-btn is-error" onclick="deleteLoop(${loop.id})">🗑️</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-    }
-
-    // --- Core Actions ---
-
-    function addLoop() {
-        const input = document.getElementById('loopInput');
-        const typeSelect = document.getElementById('loopType');
-        const name = input.value.trim();
-        const type = typeSelect.value;
-
-        if (!name) {
-            alert('Please enter a name for your loop!');
-            input.focus();
-            return;
-        }
-
-        const newLoop = {
-            id: Date.now(), // Simple unique ID
-            name: name,
-            type: type,
-            created: getIndianTime().toISOString(),
-            completions: [] // Array of date strings 'YYYY-MM-DD'
+        const getIndianTime = () => {
+            const now = new Date();
+            const offset = 5.5 * 60 * 60 * 1000; // IST Offset UTC+5:30
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            return new Date(utc + offset);
         };
 
-        // Add to state
-        state.loops.push(newLoop);
+        const getTodayDateString = () => {
+            const date = getIndianTime();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`; // Format YYYY-MM-DD
+        };
 
-        // ***FIX: Play sound based on type***
-        if (type === 'positive') {
-            playSound('add'); // Neutral UI sound for adding positive
-        } else {
-            playSound('negative'); // Negative sound when adding a negative loop
-        }
+        // Load initial state from localStorage or set defaults
+        let state = {
+            loops: JSON.parse(localStorage.getItem('loops')) || [],
+            dailyLog: JSON.parse(localStorage.getItem('dailyLog')) || [],
+            totalPoints: parseInt(localStorage.getItem('totalPoints')) || 0,
+            streak: parseInt(localStorage.getItem('streak')) || 0,
+            lastUpdatedDate: localStorage.getItem('lastUpdatedDate') || null
+        };
 
-        input.value = ''; // Clear input
+        // Simple audio cache to avoid reloading sounds
+        const audioCache = {};
+        function playSound(type) {
+            const urls = {
+                positive: 'https://assets.mixkit.co/active_storage/sfx/257/257-preview.mp3',
+                negative: 'https://assets.mixkit.co/active_storage/sfx/259/259-preview.mp3',
+                achievement: 'https://assets.mixkit.co/active_storage/sfx/2958/2958-preview.mp3',
+                add: 'https://assets.mixkit.co/active_storage/sfx/103/103-preview.mp3',
+                delete: 'https://assets.mixkit.co/active_storage/sfx/168/168-preview.mp3'
+            };
+            if (!urls[type]) return;
 
-        // Save state *after* modification
-        saveState();
-
-        // Update the UI *after* saving state
-        updateUI(); // This call re-renders the cards, showing the new one
-
-         // Optional: Scroll to the bottom or to the new card (might need fine-tuning)
-         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function completeLoop(id, buttonElement) {
-        const loop = state.loops.find(l => l.id === id);
-        if (!loop) {
-            console.error(`Loop with id ${id} not found.`);
-            return;
-        }
-
-        const today = getTodayDateString();
-
-        if (!loop.completions.includes(today)) {
-            loop.completions.push(today);
-            updateDailyPoints(today, loop.type); // Update points *before* saving
-
-            // Play sound & effect based on type
-            playSound(loop.type); // 'positive' or 'negative' sound for completion
-            if (loop.type === 'positive') {
-                confetti({
-                    particleCount: 80,
-                    spread: 60,
-                    origin: { y: 0.6 }
-                });
+            // Create audio object if not cached
+            if (!audioCache[type]) {
+                audioCache[type] = new Audio(urls[type]);
+                audioCache[type].volume = 0.6; // Adjust volume if needed
             }
 
-            // Disable button immediately for visual feedback
-            if(buttonElement){
-                buttonElement.classList.remove('is-success');
-                buttonElement.classList.add('is-disabled');
-                buttonElement.textContent = 'DONE!';
-                buttonElement.disabled = true;
-            }
-
-            // Save and update UI
-            saveState();
-            updateUI(); // Update everything including streaks and points display
-        }
-    }
-
-     function updateDailyPoints(date, typeCompleted) {
-        let dailyEntry = state.dailyLog.find(entry => entry.date === date);
-
-        if (!dailyEntry) {
-            dailyEntry = { date: date, positive: 0, negative: 0, points: 0 };
-            state.dailyLog.push(dailyEntry);
-            // Keep dailyLog sorted by date
-             state.dailyLog.sort((a, b) => a.date.localeCompare(b.date));
+            // Play the sound
+            audioCache[type].currentTime = 0; // Rewind to start
+            audioCache[type].play().catch(e => console.error(`Audio playback failed for type "${type}":`, e));
         }
 
-        // Increment count for the type completed
-        if (typeCompleted === 'positive') dailyEntry.positive++;
-        else if (typeCompleted === 'negative') dailyEntry.negative++;
-
-        // Recalculate points for the day
-        const totalCompletionsToday = dailyEntry.positive + dailyEntry.negative;
-        let pointsEarnedToday = 0;
-        if (totalCompletionsToday > 0) {
-            pointsEarnedToday = Math.min(Math.max(0, Math.round((dailyEntry.positive / totalCompletionsToday) * 10)), 10);
-        }
-        dailyEntry.points = pointsEarnedToday;
-
-        // Recalculate total points (sum of all daily points)
-        state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
-
-        // No saveState() here, it's called after this in completeLoop/etc.
-    }
-
-
-    function deleteLoop(id) {
-         if (!confirm('Are you sure you want to delete this loop and its history? This cannot be undone.')) {
-            return;
-        }
-        state.loops = state.loops.filter(l => l.id !== id);
-        playSound('delete'); // Play delete sound
-        saveState();
-        updateUI();
-    }
-
-    // --- Streak Calculation ---
-    function updateStreak(today) {
-        // Find the latest date a log entry exists
-        const lastLoggedDateStr = state.dailyLog.length > 0
-            ? state.dailyLog[state.dailyLog.length - 1].date // Assumes dailyLog is sorted
-            : null;
-
-        if (!lastLoggedDateStr) {
-             state.streak = 0; // No logs ever
-             state.lastUpdatedDate = null; // Clear last updated date
-             return; // Exit early
-        }
-
-        const lastLogDate = new Date(lastLoggedDateStr + 'T00:00:00Z');
-        const todayDate = new Date(today + 'T00:00:00Z');
-        const diffTime = todayDate - lastLogDate;
-        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24)); // Use Math.round for robustness
-
-        if (diffDays === 0) {
-             // Logged today, potentially continuing streak.
-             // If lastUpdatedDate is yesterday, increment streak. If it's today, streak stays same. If older, reset based on that gap.
-             if (state.lastUpdatedDate) {
-                 const lastUpdate = new Date(state.lastUpdatedDate + 'T00:00:00Z');
-                 const diffSinceUpdate = Math.round((todayDate - lastUpdate) / (1000 * 60 * 60 * 24));
-                 if (diffSinceUpdate === 1) {
-                     state.streak++; // Increment streak
-                 } else if (diffSinceUpdate > 1) {
-                     state.streak = 1; // Reset streak
-                 }
-                 // if diffSinceUpdate === 0, streak doesn't change
-             } else {
-                 state.streak = 1; // First log entry ever today
-             }
-             state.lastUpdatedDate = today; // Update the last processed date
-
-        } else if (diffDays === 1) {
-            // Last log was yesterday. If user logs something *today*, streak will continue/increment.
-            // We display the current streak, which depends on state.lastUpdatedDate.
-             if (state.lastUpdatedDate === lastLoggedDateStr) {
-                 // Streak was valid up to yesterday. Display current value.
-             } else {
-                 // state.lastUpdatedDate is older than yesterday, streak already broken.
-                 state.streak = 0;
-             }
-            // Don't update state.lastUpdatedDate yet, wait for a log today.
-
-        } else if (diffDays > 1) {
-            // Last log was more than 1 day ago. Streak is broken.
-            state.streak = 0;
-            // Don't update state.lastUpdatedDate yet.
-        } else {
-             // diffDays < 0 implies a future date in logs? Reset streak.
-             console.warn("Log entry found with future date:", lastLoggedDateStr);
-             state.streak = 0;
-             state.lastUpdatedDate = null; // Reset last updated if data is weird
-        }
-
-        // Final safety check
-        if (state.streak < 0) state.streak = 0;
-
-        // No saveState() here, called after updateUI potentially.
-    }
-
-
-    function calculateLoopStreak(completions, today) {
-        if (!completions || completions.length === 0) return 0;
-
-        // Ensure dates are sorted descending for easier checking
-        const sortedDates = [...completions].sort((a, b) => b.localeCompare(a)); // Sort 'YYYY-MM-DD' strings
-
-        let currentStreak = 0;
-        let expectedDateStr = today;
-
-        for (let i = 0; i < sortedDates.length; i++) {
-            if (sortedDates[i] === expectedDateStr) {
-                currentStreak++;
-                // Calculate the previous day string
-                const currentDate = new Date(expectedDateStr + 'T00:00:00Z');
-                currentDate.setDate(currentDate.getDate() - 1);
-                expectedDateStr = currentDate.toISOString().split('T')[0];
-            } else {
-                 // If the most recent completion wasn't today OR yesterday (relative to the loop), the streak is 0 starting now.
-                 // But if the loop started checking from yesterday, and found it, it should continue back.
-                 // This logic needs to handle the very first check carefully.
-
-                 // If we are on the first check (i=0) and it's not today
-                 if (i === 0) {
-                     // Check if it was yesterday
-                     const yesterday = new Date(today + 'T00:00:00Z');
-                     yesterday.setDate(yesterday.getDate() - 1);
-                     const yesterdayStr = yesterday.toISOString().split('T')[0];
-
-                     if (sortedDates[i] === yesterdayStr) {
-                         currentStreak = 1; // Streak starts from yesterday
-                         // Calculate day before yesterday
-                         const dayBeforeYesterday = new Date(yesterdayStr + 'T00:00:00Z');
-                         dayBeforeYesterday.setDate(dayBeforeYesterday.getDate() - 1);
-                         expectedDateStr = dayBeforeYesterday.toISOString().split('T')[0];
-                         // Continue to the next iteration of the loop
-                         continue;
-                     } else {
-                          // Most recent completion is older than yesterday, so current streak is 0
-                         return 0;
-                     }
-                 } else {
-                    // If the gap occurs after the first match, the streak ends here.
-                    break;
-                 }
-            }
-        }
-        return currentStreak;
-    }
-
-
-    // --- Import / Export ---
-    function exportCSV() {
-        // (Keep existing exportCSV function - it seemed okay)
-        let csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += "LIFE LOOPS DATA EXPORT\n";
-        csvContent += `Exported At,${getIndianTime().toISOString()}\n\n`;
-
-        csvContent += "SUMMARY\n";
-        csvContent += `Total Points,${state.totalPoints}\n`;
-        csvContent += `Overall Streak,${state.streak}\n`;
-        csvContent += `Last Logged Date,${state.lastUpdatedDate || 'N/A'}\n\n`;
-
-        csvContent += "ACTIVE LOOPS\n";
-        csvContent += "ID,Type,Name,Created Date,\"Completion Dates (YYYY-MM-DD)\"\n"; // Clarified header
-        state.loops.forEach(loop => {
-            const completionsStr = `"${loop.completions.join(', ')}"`; // Ensure quoted
-            csvContent += `${loop.id},${loop.type},"${loop.name.replace(/"/g, '""')}",${loop.created},${completionsStr}\n`; // Handle quotes in name
-        });
-        csvContent += "\n";
-
-        csvContent += "DAILY LOG\n";
-        csvContent += "Date,✅ Positive Count,❌ Negative Count,⭐ Daily Points (0-10)\n"; // Clarified header
-        state.dailyLog.forEach(day => {
-            csvContent += `${day.date},${day.positive},${day.negative},${day.points}\n`;
-        });
-
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `life_loops_backup_${getTodayDateString()}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        playSound('achievement'); // Sound for successful export
-    }
-
-    function importCSV(event) {
-        // (Keep existing importCSV function - it seemed okay)
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
+        // Save the current state to localStorage
+        function saveState() {
             try {
-                const csvData = e.target.result;
-                const lines = csvData.split('\n').map(line => line.trim()).filter(line => line);
-
-                const newState = { loops: [], dailyLog: [], totalPoints: 0, streak: 0, lastUpdatedDate: null };
-                let currentSection = '';
-                let headers = [];
-
-                for (const line of lines) {
-                    if (line.startsWith('LIFE LOOPS DATA EXPORT')) continue;
-                    if (line.startsWith('Exported At')) continue;
-                    if (line.startsWith('SUMMARY')) { currentSection = 'summary'; continue; }
-                    if (line.startsWith('ACTIVE LOOPS')) { currentSection = 'loops'; headers = []; continue; } // Reset headers
-                    if (line.startsWith('DAILY LOG')) { currentSection = 'daily'; headers = []; continue; } // Reset headers
-
-                    // Basic CSV parsing (handles simple quotes and commas)
-                    const values = parseCsvLine(line);
-
-                    switch(currentSection) {
-                        case 'summary':
-                            const [summaryKey, summaryValue] = values;
-                            if (summaryKey === 'Total Points') newState.totalPoints = parseInt(summaryValue) || 0;
-                            if (summaryKey === 'Overall Streak') newState.streak = parseInt(summaryValue) || 0; // Import streak but it will be recalculated anyway
-                            if (summaryKey === 'Last Logged Date') newState.lastUpdatedDate = summaryValue !== 'N/A' ? summaryValue : null; // Import last logged date
-                            break;
-
-                        case 'loops':
-                             if (headers.length === 0 && values.includes('ID')) { // Check if it's the header row
-                                headers = values;
-                                continue;
-                            }
-                            if (values.length >= 4) { // ID, Type, Name, Created Date are minimum
-                                const completions = values[4] ? values[4].split(',').map(d => d.trim()).filter(d => d && /^\d{4}-\d{2}-\d{2}$/.test(d)) : []; // Validate date format basic
-                                newState.loops.push({
-                                    id: parseInt(values[0]) || Date.now() + Math.random(), // Fallback ID
-                                    type: values[1] && ['positive', 'negative'].includes(values[1].toLowerCase()) ? values[1].toLowerCase() : 'positive', // Validate type
-                                    name: values[2] || 'Unnamed Loop',
-                                    created: values[3] || new Date().toISOString(), // Fallback created date
-                                    completions: completions
-                                });
-                            }
-                            break;
-
-                        case 'daily':
-                            if (headers.length === 0 && values.includes('Date')) { // Check if it's the header row
-                                headers = values;
-                                continue;
-                             }
-                             if (values.length >= 4 && /^\d{4}-\d{2}-\d{2}$/.test(values[0])) { // Date, Positive, Negative, Points + Validate Date
-                                newState.dailyLog.push({
-                                    date: values[0],
-                                    positive: parseInt(values[1]) || 0,
-                                    negative: parseInt(values[2]) || 0,
-                                    points: parseInt(values[3]) || 0
-                                });
-                            }
-                            break;
-                    }
-                }
-
-                // Basic validation
-                if (newState.loops.length === 0 && newState.dailyLog.length === 0 && newState.totalPoints === 0) {
-                     // Allow importing empty state maybe? Or warn user?
-                     // console.warn("Imported file resulted in empty state.");
-                }
-
-                state = newState;
-                 // Sort logs after import
-                state.dailyLog.sort((a, b) => a.date.localeCompare(b.date));
-                 // Recalculate total points based on imported logs
-                state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
-                // Find the actual last logged date from sorted logs
-                state.lastUpdatedDate = state.dailyLog.length > 0 ? state.dailyLog[state.dailyLog.length - 1].date : null;
-                // Recalculate streak based on imported data
-                updateStreak(getTodayDateString()); // Calculate fresh streak
-
-                saveState();
-                updateUI();
-                playSound('achievement'); // Sound for success
-                alert('Data imported successfully! 🎉');
-
+                localStorage.setItem('loops', JSON.stringify(state.loops));
+                localStorage.setItem('dailyLog', JSON.stringify(state.dailyLog));
+                localStorage.setItem('totalPoints', state.totalPoints);
+                localStorage.setItem('streak', state.streak);
+                // Save lastUpdatedDate as string, empty if null
+                localStorage.setItem('lastUpdatedDate', state.lastUpdatedDate || '');
             } catch (error) {
-                 console.error("Import failed:", error);
-                 alert(`Import failed: ${error.message}\nPlease ensure the CSV file is correctly formatted.`);
-                 playSound('negative');
-            } finally {
-                // Reset file input to allow importing the same file again if needed
-                event.target.value = null;
+                console.error("Error saving state to localStorage:", error);
+                // Optionally notify the user that saving failed
+                // alert("Warning: Could not save your progress. Local storage might be full or disabled.");
             }
-        };
-        reader.onerror = function() {
-            alert('Failed to read the file.');
-            playSound('negative');
-             event.target.value = null;
-        };
-        reader.readAsText(file);
-    }
+        }
 
-    function parseCsvLine(line) {
-        // (Keep existing parseCsvLine function)
-        const values = [];
-        let currentVal = '';
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-            const char = line[i];
-            if (char === '"') {
-                if (inQuotes && line[i+1] === '"') { // Handle escaped quote ""
-                    currentVal += '"';
-                    i++; // Skip next quote
-                } else {
-                    inQuotes = !inQuotes;
-                }
-            } else if (char === ',' && !inQuotes) {
-                values.push(currentVal);
-                currentVal = '';
+        // --- UI Update & Rendering ---
+
+        function updateUI() {
+            const today = getTodayDateString();
+            const container = document.getElementById('loops-container');
+            const noLoopsMessage = document.getElementById('no-loops-message');
+
+            // Ensure required elements exist before proceeding
+            if (!container || !noLoopsMessage) {
+                console.error("Critical error: UI container elements (#loops-container or #no-loops-message) not found.");
+                return;
+            }
+
+            // --- Update Core State Metrics ---
+            // Calculate overall streak BEFORE updating display elements
+            updateStreak(today);
+
+            // Find today's log entry for point display
+            const todayData = state.dailyLog.find(d => d.date === today) || {
+                points: 0
+            };
+
+            // --- Update Static Display Elements ---
+            document.getElementById('dailyPoints').textContent = todayData.points;
+            document.getElementById('totalPoints').textContent = state.totalPoints;
+            document.getElementById('streak').textContent = `${state.streak} day${state.streak === 1 ? '' : 's'}`;
+            document.getElementById('positiveCount').textContent = state.loops.filter(l => l.type === 'positive').length;
+            document.getElementById('negativeCount').textContent = state.loops.filter(l => l.type === 'negative').length;
+
+            // --- Render Loop Cards ---
+            if (state.loops.length === 0) {
+                container.innerHTML = ''; // Clear if empty
+                noLoopsMessage.style.display = 'block'; // Show the 'no loops' message
             } else {
-                currentVal += char;
+                noLoopsMessage.style.display = 'none'; // Hide the 'no loops' message
+
+                // Create a sorted copy for rendering (e.g., by creation date)
+                const sortedLoops = [...state.loops].sort((a, b) => (a.created || '').localeCompare(b.created || ''));
+
+                // Generate HTML for all cards using map and join
+                const cardsHTML = sortedLoops.map(loop => {
+                    // Calculate individual loop streak for display
+                    const loopStreak = calculateLoopStreak(loop.completions, today);
+                    const isCompletedToday = loop.completions.includes(today);
+
+                    // Generate history badges (limit to last 5, newest first)
+                    const historyDates = loop.completions
+                        .slice(-5) // Get the last 5 completion dates
+                        .sort((a, b) => b.localeCompare(a)) // Sort them descending (newest first)
+                        .map(d => {
+                            // Format date string for display (e.g., '25 Dec')
+                            const [year, month, day] = d.split('-');
+                            const dateObj = new Date(Date.UTC(year, month - 1, day)); // Use UTC for consistency
+                            const displayDate = dateObj.toLocaleDateString('en-IN', {
+                                day: 'numeric',
+                                month: 'short',
+                                timeZone: 'UTC'
+                            });
+                            // Style badge differently if it's today's date
+                            const badgeClass = d === today ? 'is-primary' : 'is-dark';
+                            return `<span class="nes-badge ${badgeClass}"><span class="${badgeClass}">${displayDate}</span></span>`;
+                        })
+                        .join(' '); // Join badge HTML strings
+
+                    // Return the complete HTML string for one card
+                    return `
+                    <div class="nes-container is-rounded loop-card is-${loop.type}" data-loop-id="${loop.id}">
+                        <div class="loop-card-header">
+                            <span class="loop-card-title">${loop.name}</span>
+                            <span class="loop-card-type">${loop.type === 'positive' ? '✅' : '❌'}</span>
+                        </div>
+                        <div class="loop-card-body">
+                            <div class="loop-streak">
+                                🔥 Streak: <strong>${loopStreak} day${loopStreak === 1 ? '' : 's'}</strong>
+                            </div>
+                            <div class="loop-history">
+                                 History: ${historyDates || '<em style="color:#777;">None yet</em>'}
+                            </div>
+                        </div>
+                        <div class="loop-card-actions">
+                            <button
+                                class="nes-btn ${isCompletedToday ? 'is-disabled' : 'is-success'}"
+                                ${isCompletedToday ? 'disabled' : ''}
+                                onclick="completeLoop(${loop.id}, this)">
+                                ${isCompletedToday ? 'DONE!' : '✔️'}
+                            </button>
+                            <button class="nes-btn is-error" onclick="deleteLoop(${loop.id})">🗑️</button>
+                        </div>
+                    </div>
+                    `;
+                }).join(''); // Join all individual card HTML strings
+
+                // Update the container's content with the generated HTML
+                container.innerHTML = cardsHTML;
+            }
+
+            // Check if mobile orientation alert should be shown
+            checkOrientation();
+        }
+
+        // --- Core Actions ---
+
+        function addLoop() {
+            const input = document.getElementById('loopInput');
+            const typeSelect = document.getElementById('loopType');
+            const name = input.value.trim();
+            const type = typeSelect.value;
+
+            // Basic validation: ensure name is not empty
+            if (!name) {
+                alert('Please enter a name for your loop!');
+                input.focus();
+                return;
+            }
+
+            // Create the new loop object
+            const newLoop = {
+                id: Date.now() + Math.random(), // Simple unique ID
+                name: name,
+                type: type,
+                created: getIndianTime().toISOString(), // Store creation timestamp
+                completions: [] // Initialize completions array
+            };
+
+            // Add the new loop to the state
+            state.loops.push(newLoop);
+
+            // Play appropriate sound and effect
+            if (type === 'positive') {
+                playSound('add');
+                confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+            } else {
+                playSound('negative'); // Maybe a different sound for adding negative?
+            }
+
+            // Clear the input field
+            input.value = '';
+
+            // Update the UI to reflect the change, then save the new state
+            updateUI();
+            saveState();
+
+            // Optional: Scroll to the bottom to show the new card
+            // window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function completeLoop(id, buttonElement) { // Keep buttonElement if needed for immediate visual feedback (though re-render handles it)
+            const loop = state.loops.find(l => l.id === id);
+            if (!loop) {
+                console.error(`Loop with id ${id} not found.`);
+                return;
+            }
+
+            const today = getTodayDateString();
+
+            // Only proceed if the loop hasn't been completed today already
+            if (!loop.completions.includes(today)) {
+                loop.completions.push(today);
+                updateDailyPoints(today, loop.type); // Update daily and total points
+
+                // Play sound and effect based on loop type
+                playSound(loop.type);
+                if (loop.type === 'positive') {
+                    confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+                }
+
+                // Update UI (which will re-render the button state), then save
+                updateUI();
+                saveState();
             }
         }
-        values.push(currentVal); // Add the last value
-        return values.map(val => val.trim());
-    }
 
+        // Updates daily points based on completions for a given date
+        function updateDailyPoints(date, typeCompleted) {
+            let dailyEntry = state.dailyLog.find(entry => entry.date === date);
 
-    // --- Mobile Specific ---
-    function isMobile() {
-        // (Keep existing isMobile function)
-        return /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    function checkOrientation() {
-        // (Keep existing checkOrientation function)
-        const alert = document.querySelector('.mobile-alert');
-        if (!alert) return; // Guard against element not found
-
-        // Show alert only on mobile AND in portrait mode
-        if (isMobile() && window.innerHeight > window.innerWidth) {
-            if (localStorage.getItem('landscapeAlertDismissed') !== 'true') {
-                 alert.style.display = 'block';
+            // Create a new log entry for the date if it doesn't exist
+            if (!dailyEntry) {
+                dailyEntry = { date: date, positive: 0, negative: 0, points: 0 };
+                state.dailyLog.push(dailyEntry);
+                // Keep the log sorted by date (important for streak calculation)
+                state.dailyLog.sort((a, b) => a.date.localeCompare(b.date));
             }
-        } else {
-            alert.style.display = 'none';
-        }
-    }
 
-    function dismissAlert() {
-        // (Keep existing dismissAlert function)
-        const alert = document.querySelector('.mobile-alert');
-        if (alert) alert.style.display = 'none';
-        localStorage.setItem('landscapeAlertDismissed', 'true');
-    }
+            // Increment the count for the type of loop completed
+            if (typeCompleted === 'positive') {
+                dailyEntry.positive++;
+            } else if (typeCompleted === 'negative') {
+                dailyEntry.negative++;
+            }
 
+            // Recalculate points for the day (0-10 scale based on positive ratio)
+            const totalCompletionsToday = dailyEntry.positive + dailyEntry.negative;
+            dailyEntry.points = totalCompletionsToday > 0
+                ? Math.min(Math.max(0, Math.round((dailyEntry.positive / totalCompletionsToday) * 10)), 10)
+                : 0; // Points are 0 if no completions
 
-    // --- Initialization ---
-    document.addEventListener('DOMContentLoaded', () => {
-        // Initial render calls updateStreak internally
-        updateUI();
-
-        // Set up listeners
-        window.addEventListener('resize', checkOrientation);
-        if ('onorientationchange' in window) {
-            window.addEventListener('orientationchange', checkOrientation);
+            // Recalculate the overall total points
+            state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
         }
 
-        // Handle dismissed alert state on load
-        if (localStorage.getItem('landscapeAlertDismissed') === 'true') {
+        function deleteLoop(id) {
+            // Confirmation dialog before deleting
+            if (!confirm('Are you sure you want to delete this loop and its history? This cannot be undone.')) {
+                return;
+            }
+
+            // Filter out the loop with the matching ID
+            state.loops = state.loops.filter(l => l.id !== id);
+
+            playSound('delete'); // Play deletion sound
+
+            // Update UI to remove the card, then save the state
+            updateUI();
+            saveState();
+        }
+
+        // --- Streak Calculation ---
+
+        // Calculates and updates the overall 'state.streak' and 'state.lastUpdatedDate'
+        function updateStreak(today) {
+            // Find the date of the most recent log entry
+            const lastLoggedDateStr = state.dailyLog.length > 0 ? state.dailyLog[state.dailyLog.length - 1].date : null;
+
+            // If there are no logs ever, streak is 0
+            if (!lastLoggedDateStr) {
+                state.streak = 0;
+                state.lastUpdatedDate = null;
+                return;
+            }
+
+            // Use UTC dates for reliable day difference calculation
+            const lastLogDate = new Date(Date.UTC(...lastLoggedDateStr.split('-').map((n, i) => i === 1 ? n - 1 : n)));
+            const todayDate = new Date(Date.UTC(...today.split('-').map((n, i) => i === 1 ? n - 1 : n)));
+            const diffTime = todayDate - lastLogDate;
+            // Calculate difference in days (rounding handles potential DST shifts)
+            const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) {
+                // Logged today. Check if the streak continues from yesterday.
+                if (state.lastUpdatedDate) {
+                    const lastUpdate = new Date(Date.UTC(...state.lastUpdatedDate.split('-').map((n, i) => i === 1 ? n - 1 : n)));
+                    const diffSinceUpdate = Math.round((todayDate - lastUpdate) / (1000 * 60 * 60 * 24));
+
+                    if (diffSinceUpdate === 1) {
+                        state.streak++; // Increment if last update was yesterday
+                    } else if (diffSinceUpdate > 1) {
+                        state.streak = 1; // Reset to 1 if gap since last update
+                    }
+                    // If diffSinceUpdate is 0, streak remains unchanged (already processed today)
+                } else {
+                    state.streak = 1; // First log entry is today
+                }
+                // Mark today as the last date processed for streak purposes
+                state.lastUpdatedDate = today;
+
+            } else if (diffDays === 1) {
+                // Last log was yesterday. Streak *might* continue, but only if it was valid up to yesterday.
+                // Check if the last processed date *was* yesterday. If not, streak was already broken.
+                if (!state.lastUpdatedDate || state.lastUpdatedDate !== lastLoggedDateStr) {
+                    state.streak = 0;
+                }
+                // Don't update lastUpdatedDate yet; wait for a log today.
+
+            } else if (diffDays > 1) {
+                // Gap of more than one day since last log. Streak is broken.
+                state.streak = 0;
+                // lastUpdatedDate remains the date of the last actual log.
+            } else {
+                // Should not happen with sorted logs (diffDays < 0 means future date)
+                console.warn("Log date issue or future date found:", lastLoggedDateStr);
+                state.streak = 0;
+                state.lastUpdatedDate = null; // Reset if data seems inconsistent
+            }
+
+            // Safety check: ensure streak is not negative
+            if (state.streak < 0) state.streak = 0;
+        }
+
+        // Calculates the current streak for a *single* loop
+        function calculateLoopStreak(completions, today) {
+            if (!completions || completions.length === 0) return 0;
+
+            // Sort completion dates descending (newest first)
+            const sortedDates = [...completions].sort((a, b) => b.localeCompare(a));
+
+            let currentStreak = 0;
+            let expectedDateStr = today;
+            // Use UTC date object for calculations
+            let expectedDate = new Date(Date.UTC(...expectedDateStr.split('-').map((n, i) => i === 1 ? n - 1 : n)));
+
+            for (let i = 0; i < sortedDates.length; i++) {
+                const completionDateStr = sortedDates[i];
+
+                // Check if the completion date matches the expected date in the sequence
+                if (completionDateStr === expectedDateStr) {
+                    currentStreak++;
+                    // Decrement the expected date to check for the previous day
+                    expectedDate.setUTCDate(expectedDate.getUTCDate() - 1);
+                    expectedDateStr = expectedDate.toISOString().split('T')[0];
+                } else {
+                    // If the first date checked wasn't today, check if it was yesterday
+                    if (i === 0) {
+                        const yesterdayDate = new Date(Date.UTC(...today.split('-').map((n, i) => i === 1 ? n - 1 : n)));
+                        yesterdayDate.setUTCDate(yesterdayDate.getUTCDate() - 1);
+                        const yesterdayStr = yesterdayDate.toISOString().split('T')[0];
+
+                        if (completionDateStr === yesterdayStr) {
+                            // If it was yesterday, streak is 1, continue checking from day before yesterday
+                            currentStreak = 1;
+                            expectedDate = new Date(Date.UTC(...yesterdayStr.split('-').map((n, i) => i === 1 ? n - 1 : n)));
+                            expectedDate.setUTCDate(expectedDate.getUTCDate() - 1);
+                            expectedDateStr = expectedDate.toISOString().split('T')[0];
+                            continue; // Continue the loop to check for older dates
+                        }
+                    }
+                    // If the date doesn't match the expected sequence, the streak is broken
+                    break;
+                }
+            }
+            return currentStreak;
+        }
+
+        // --- Import / Export ---
+
+        function exportCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "LIFE LOOPS DATA EXPORT\n";
+            csvContent += `Exported At,${getIndianTime().toISOString()}\n\n`;
+
+            // Summary Section
+            csvContent += "SUMMARY\n";
+            csvContent += `Total Points,${state.totalPoints}\n`;
+            csvContent += `Overall Streak,${state.streak}\n`; // Consistent header
+            csvContent += `Last Logged Date,${state.lastUpdatedDate || 'N/A'}\n\n`; // Consistent header
+
+            // Active Loops Section
+            csvContent += "ACTIVE LOOPS\n";
+            csvContent += "ID,Type,Name,Created Date,\"Completion Dates (YYYY-MM-DD)\"\n"; // Consistent header
+            state.loops.forEach(loop => {
+                const completionsStr = `"${loop.completions.join(',')}"`; // Comma-separated, quoted
+                const nameStr = `"${(loop.name || '').replace(/"/g, '""')}"`; // Handle quotes within name
+                csvContent += `${loop.id},${loop.type},${nameStr},${loop.created || ''},${completionsStr}\n`;
+            });
+            csvContent += "\n";
+
+            // Daily Log Section
+            csvContent += "DAILY LOG\n"; // Consistent header
+            csvContent += "Date,✅ Positive Count,❌ Negative Count,⭐ Daily Points (0-10)\n"; // Consistent header
+            state.dailyLog.forEach(day => {
+                csvContent += `${day.date},${day.positive},${day.negative},${day.points}\n`;
+            });
+
+            // Create download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `life_loops_backup_${getTodayDateString()}.csv`);
+            document.body.appendChild(link);
+            link.click(); // Trigger download
+            document.body.removeChild(link); // Clean up link element
+
+            playSound('achievement'); // Play success sound
+        }
+
+        function importCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return; // No file selected
+
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                try {
+                    const csvData = e.target.result;
+                    const lines = csvData.split('\n').map(line => line.trim()).filter(line => line); // Split lines, trim whitespace, remove empty lines
+
+                    // Initialize a new state object to populate from CSV
+                    const newState = {
+                        loops: [],
+                        dailyLog: [],
+                        totalPoints: 0,
+                        streak: 0,
+                        lastUpdatedDate: null
+                    };
+                    let currentSection = '';
+                    let headers = []; // Used to potentially handle different column orders (though not fully implemented here)
+
+                    // Process each line of the CSV
+                    for (const line of lines) {
+                        // Skip header/metadata lines
+                        if (line.startsWith('LIFE LOOPS DATA EXPORT') || line.startsWith('Exported At')) continue;
+
+                        // Identify current section
+                        if (line.startsWith('SUMMARY')) { currentSection = 'summary'; continue; }
+                        if (line.startsWith('ACTIVE LOOPS')) { currentSection = 'loops'; headers = []; continue; }
+                        if (line.startsWith('DAILY LOG')) { currentSection = 'daily'; headers = []; continue; }
+
+                        // Parse the CSV line into values
+                        const values = parseCsvLine(line);
+
+                        // Populate newState based on the current section
+                        switch (currentSection) {
+                            case 'summary':
+                                // Currently, only 'Total Points' might be useful, but we recalculate it anyway.
+                                // Streak and Last Logged Date are ignored here and recalculated later.
+                                break;
+                            case 'loops':
+                                // Basic check for header row
+                                if (headers.length === 0 && values[0]?.toLowerCase() === 'id') {
+                                    headers = values.map(h => h.toLowerCase());
+                                    continue;
+                                }
+                                // Ensure minimum expected columns are present
+                                if (values.length >= 4) {
+                                    // Parse completions, ensure valid date format
+                                    const completions = values[4] ? values[4].split(',').map(d => d.trim()).filter(d => d && /^\d{4}-\d{2}-\d{2}$/.test(d)) : [];
+                                    newState.loops.push({
+                                        id: parseFloat(values[0]) || Date.now() + Math.random(), // Use parseFloat, provide fallback ID
+                                        type: values[1]?.toLowerCase() === 'negative' ? 'negative' : 'positive', // Default to positive if invalid
+                                        name: values[2] || 'Unnamed Loop',
+                                        created: values[3] || new Date().toISOString(), // Provide fallback creation date
+                                        completions: completions.sort() // Store completions sorted
+                                    });
+                                }
+                                break;
+                            case 'daily':
+                                // Basic check for header row
+                                if (headers.length === 0 && values[0]?.toLowerCase() === 'date') {
+                                    headers = values.map(h => h.toLowerCase());
+                                    continue;
+                                }
+                                // Ensure minimum columns and valid date format
+                                if (values.length >= 4 && /^\d{4}-\d{2}-\d{2}$/.test(values[0])) {
+                                    newState.dailyLog.push({
+                                        date: values[0],
+                                        positive: parseInt(values[1]) || 0,
+                                        negative: parseInt(values[2]) || 0,
+                                        points: parseInt(values[3]) || 0
+                                    });
+                                }
+                                break;
+                        }
+                    }
+
+                    // Replace current state with the imported state
+                    state = newState;
+
+                    // --- Post-Import Processing ---
+                    // Sort daily logs (crucial for streak calculation)
+                    state.dailyLog.sort((a, b) => a.date.localeCompare(b.date));
+                    // Recalculate total points from the imported logs
+                    state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
+                    // Reset streak data before recalculation
+                    state.lastUpdatedDate = null;
+                    state.streak = 0;
+
+                    // Update UI (this will recalculate streak), then save the fully processed state
+                    updateUI();
+                    saveState();
+
+                    playSound('achievement'); // Play success sound
+                    alert('Data imported successfully! 🎉');
+
+                } catch (error) {
+                    console.error("Import failed:", error);
+                    alert(`Import failed: ${error.message}\nPlease ensure the CSV file format is correct.`);
+                    playSound('negative'); // Play error sound
+                } finally {
+                    // Reset the file input to allow importing the same file again if needed
+                    event.target.value = null;
+                }
+            };
+
+            reader.onerror = function() {
+                alert('Failed to read the selected file.');
+                playSound('negative');
+                event.target.value = null;
+            };
+
+            // Read the file as text
+            reader.readAsText(file);
+        }
+
+        // Parses a single line of CSV, handling quoted fields and escaped quotes ("")
+        function parseCsvLine(line) {
+            const values = [];
+            let currentVal = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    // Check for escaped quote ("")
+                    if (inQuotes && line[i + 1] === '"') {
+                        currentVal += '"';
+                        i++; // Skip the next quote
+                    } else {
+                        inQuotes = !inQuotes; // Toggle quote state
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    // End of a value (if not inside quotes)
+                    values.push(currentVal.trim());
+                    currentVal = ''; // Reset for next value
+                } else {
+                    // Append character to current value
+                    currentVal += char;
+                }
+            }
+            values.push(currentVal.trim()); // Add the last value
+            return values;
+        }
+
+
+        // --- Mobile Specific ---
+
+        // Simple check for mobile user agents
+        function isMobile() {
+            // Standard mobile check regex
+            return /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Show/hide mobile orientation alert based on device type and orientation
+        function checkOrientation() {
             const alert = document.querySelector('.mobile-alert');
-             if (alert) alert.style.display = 'none';
-        } else {
-             checkOrientation(); // Check initial orientation if not dismissed
+            if (!alert) return; // Exit if alert element doesn't exist
+
+            const isPortrait = window.innerHeight > window.innerWidth;
+
+            // Show only if mobile, in portrait, and alert hasn't been dismissed
+            if (isMobile() && isPortrait) {
+                if (localStorage.getItem('landscapeAlertDismissed') !== 'true') {
+                    alert.style.display = 'block';
+                }
+            } else {
+                // Hide in landscape or on non-mobile devices
+                alert.style.display = 'none';
+            }
         }
 
-        // Save state after initial load/streak calculation potentially updates it
-         saveState();
-    });
+        // Hides the alert and sets a flag in localStorage so it doesn't reappear
+        function dismissAlert() {
+            const alert = document.querySelector('.mobile-alert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+            // Remember dismissal preference
+            localStorage.setItem('landscapeAlertDismissed', 'true');
+        }
 
+        // --- Initialization ---
+
+        // Runs when the page content is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Perform the initial UI rendering based on loaded state
+            updateUI();
+
+            // Set up listeners for screen resize and orientation changes
+            window.addEventListener('resize', checkOrientation);
+            // Use orientationchange event if available (more reliable on some devices)
+            if ('onorientationchange' in window) {
+                window.addEventListener('orientationchange', checkOrientation);
+            }
+
+            // Check initial orientation to show/hide the alert
+            checkOrientation();
+        });
     </script>
+
 </body>
 </html>
