@@ -3,20 +3,23 @@
 <head>
     <!-- Primary Meta Tags -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Loops - Habit Tracking RPG Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Life Loops - Habit Tracking RPG</title>
     <meta name="description" content="Life Loops - Gamified Habit Tracker. Build positive habits and break negative ones through an 8-bit RPG-inspired interface. Track your daily streaks and earn achievements!">
-    <meta name="keywords" content="habit tracker, productivity game, RPG habits, life improvement, daily streaks, gamification, personal development">
+    <meta name="keywords" content="habit tracker, productivity game, RPG habits, life improvement, daily streaks, gamification, personal development, mobile habit tracker">
     <meta name="author" content="Tanmay Kalbande">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./assets/triangles.png">
+    <link rel="icon" type="image/png" href="./assets/triangles.png"> <!-- Make sure this path is correct -->
 
-    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet">
+    <!-- NES.css and Font -->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-    <!-- Vercel Analytics Tracker -->
+    <!-- Vercel Analytics (Optional) -->
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
@@ -28,7 +31,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Life Loops",
-        "description": "Gamified habit tracking application with retro RPG aesthetics",
+        "description": "Gamified habit tracking application with retro RPG aesthetics for mobile",
         "applicationCategory": "Productivity",
         "operatingSystem": "Web",
         "author": {
@@ -44,416 +47,457 @@
     </script>
 
     <style>
+        /* Reset and Base */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            background: #f0f0f0;
-            padding: 16px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 10px;
-            line-height: 1.4;
-            min-height: 100vh;
+        html {
+            font-size: 10px; /* Base font size for rem units */
         }
 
+        body {
+            background: #202020 url('data:image/svg+xml,%3Csvg width="6" height="6" viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23404040" fill-opacity="0.4" fill-rule="evenodd"%3E%3Cpath d="M5 0h1L0 6V5zM6 5v1H5z"/%3E%3C/g%3E%3C/svg%3E'); /* Subtle dark pattern */
+            padding: 1.5rem 1rem;
+            font-family: 'Press Start 2P', cursive;
+            line-height: 1.6;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* Container */
         .container {
-            max-width: 100%;
+            max-width: 600px; /* Slightly wider max for better card layout */
             margin: 0 auto;
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 2rem; /* Increased gap */
         }
 
+        /* Header */
         .game-header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
         }
 
         .title-container {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1rem;
         }
 
         .main-title {
-            font-size: 1.3rem;
-            color: #e74c3c;
+            font-size: 2rem; /* Larger title */
+            color: #e74c3c; /* NES red */
             text-shadow: 3px 3px 0 #000;
             animation: titleGlow 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes titleGlow {
-            from { text-shadow: 3px 3px 0 #000, 0 0 10px #ffd700; }
-            to { text-shadow: 3px 3px 0 #000, 0 0 20px #ffd700, 0 0 30px #ffd700; }
+            from { text-shadow: 3px 3px 0 #000, 0 0 5px #ff9900; }
+            to { text-shadow: 3px 3px 0 #000, 0 0 15px #ffcc00, 0 0 20px #ffcc00; }
         }
 
+        .title-icon {
+            font-size: 2.5rem;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* Points Counter */
         .points-counter {
-            padding: 0.8rem 1.2rem;
-            background: white;
-            border: 4px solid black;
-            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            background: #fff;
+            border: 4px solid #000;
+            border-radius: 0; /* NES style */
             box-shadow: 4px 4px 0 #000;
-            font-size: 1rem;
+            font-size: 1.2rem;
+            display: inline-flex; /* Use inline-flex */
+            align-items: center;
+            gap: 1rem;
+            color: #212529;
+            flex-wrap: wrap; /* Allow wrapping */
+            justify-content: center; /* Center items when wrapped */
+        }
+
+        .points-counter span {
+            font-weight: bold;
+            color: #e74c3c; /* NES red for numbers */
+            min-width: 1.5em; /* Ensure space for numbers */
+            text-align: center;
+        }
+
+        .points-counter i.nes-icon.star,
+        .points-counter i.nes-icon.trophy {
+             margin-right: 0.5rem;
+        }
+
+
+        /* Add Loop Section */
+        .add-loop-section {
+            background-color: #fff;
+            color: #212529;
+            padding: 1.5rem;
+            box-shadow: 4px 4px 0 #000;
+            border: 4px solid #000;
+        }
+
+        .nes-field {
+            margin-bottom: 1rem;
+        }
+        .nes-field:last-of-type {
+            margin-bottom: 1.5rem; /* More space before button */
+        }
+
+        .nes-input, .nes-select select { /* Target select element inside nes-select */
+            font-size: 1.2rem; /* Slightly larger input text */
+            padding: 1rem;
+            width: 100%; /* Ensure full width */
+        }
+        /* Ensure nes-select div takes full width */
+        .nes-select {
+            width: 100%;
+        }
+
+        .nes-btn {
+            font-size: 1.2rem;
+            padding: 1rem;
+            transition: transform 0.1s ease;
+        }
+        .nes-btn:active {
+            transform: translateY(2px); /* NES button press effect */
+        }
+
+
+        /* Loops Container (Card Layout) */
+        #loops-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column by default */
+            gap: 1.8rem;
+            min-height: 50px; /* Give it some height even when empty */
+        }
+        /* Style for the 'no loops' message */
+        #no-loops-message {
+            color: #777; /* Lighter grey */
+            text-align: center;
+            font-size: 1.1rem;
+            padding: 2rem 1rem;
+            border: 2px dashed #555; /* Dashed border */
+            display: none; /* Hidden by default, shown via JS */
+            width: 100%; /* Take full width of the grid area */
+        }
+
+
+        /* Loop Card */
+        .loop-card {
+            background-color: #fff;
+            color: #212529;
+            border: 4px solid #000;
+            padding: 1.2rem;
+            box-shadow: 4px 4px 0 #000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .loop-card.is-positive { border-left: 8px solid #92cc41; /* NES green */}
+        .loop-card.is-negative { border-left: 8px solid #e76e55; /* NES orange/red */}
+
+        .loop-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* Align items top */
+            gap: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px dashed #ccc; /* Separator */
+        }
+
+        .loop-card-title {
+            font-size: 1.4rem;
+            word-break: break-word; /* Prevent overflow */
+            flex-grow: 1; /* Allow title to take available space */
+            margin-right: 1rem; /* Space before icon */
+            line-height: 1.4; /* Adjust line height for wrapping */
+        }
+
+        .loop-card-type {
+            font-size: 2rem;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .loop-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .loop-streak {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .nes-field {
-            margin: 1rem 0;
+        .loop-history {
+            line-height: 1.8; /* More space for badges */
+        }
+        .loop-history .nes-badge {
+            font-size: 0.9rem;
+            padding: 3px 5px;
+            margin-right: 4px;
+            margin-bottom: 4px; /* Space if badges wrap */
+            display: inline-block; /* Ensure margin/padding works */
+        }
+
+        .loop-card-actions {
             display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
+            gap: 1rem;
+            margin-top: 1rem; /* Increased space above actions */
         }
 
-        .nes-input, .nes-select {
-            width: 100%;
-            font-size: 12px;
-            padding: 8px;
+        .loop-card-actions .nes-btn {
+            flex: 1; /* Make buttons share space */
+            padding: 0.8rem;
+            font-size: 1.1rem;
         }
+        .loop-card-actions .nes-btn.is-success { font-size: 1.5rem; line-height: 1; } /* Larger Checkmark */
+        .loop-card-actions .nes-btn.is-error { font-size: 1.3rem; line-height: 1; } /* Larger Bin */
 
-        .nes-btn {
-            width: 100%;
-            padding: 10px;
-            font-size: 12px;
-            transition: transform 0.1s ease;
-        }
 
-        .nes-btn:active {
-            transform: scale(0.98);
-        }
-
-        .nes-container {
-            padding: 1.2rem;
-            margin: 0;
-            border-radius: 8px;
+        /* Stats Section */
+        .stats-section {
+            background-color: #fff;
+            color: #212529;
+            padding: 1.5rem;
             box-shadow: 4px 4px 0 #000;
+            border: 4px solid #000;
         }
 
-        .nes-table-responsive {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin: 0.8rem 0;
+        .stats-list dt {
+            font-weight: normal;
+            margin-bottom: 0.8rem; /* More space between stats */
+            font-size: 1.2rem;
+            display: inline-block;
+            min-width: 15ch; /* Align values */
+            color: #555; /* Dim the label slightly */
+        }
+        .stats-list dd {
+            display: inline-block;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-left: 1rem;
+            color: #e74c3c;
         }
 
-        .nes-table {
-            font-size: 10px;
-            border-collapse: separate;
-            border-spacing: 0 6px;
-        }
 
-        .nes-table th, .nes-table td {
-            padding: 10px;
-            min-width: 90px;
-            vertical-align: middle;
-        }
-
-        .completions {
+        /* Import/Export */
+        .file-actions {
             display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 4px;
-        }
-
-        .completions .nes-badge {
-            font-size: 8px;
-            padding: 4px;
-        }
-
-        .actions-column {
-            display: flex;
-            gap: 6px;
-            flex-direction: row;
-            justify-content: center;
-        }
-
-        .actions-column .nes-btn {
-            flex: 1;
-            padding: 6px;
-            font-size: 10px;
-        }
-
-        .title-icon {
-            font-size: 1.8rem;
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .small-btns {
-            display: flex;
-            gap: 8px;
+            gap: 1rem;
+            justify-content: center; /* Center buttons */
             margin-top: 1rem;
         }
 
-        .small-btn {
-            padding: 6px 8px !important;
-            font-size: 10px !important;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
-            100% { transform: translateY(0); }
-        }
-
-        @media (min-width: 480px) {
-            body {
-                font-size: 12px;
-                padding: 24px;
-            }
-
-            .container {
-                max-width: 800px;
-                gap: 1.8rem;
-            }
-
-            .nes-table {
-                font-size: 11px;
-            }
-
-            .main-title {
-                font-size: 1.8rem;
-            }
-
-            .title-icon {
-                font-size: 2.2rem;
-            }
-
-            .nes-container {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 375px) {
-            .game-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .main-title {
-                font-size: 1.1rem;
-            }
-        }
-
-        .section-spacing {
-            margin-bottom: 1.5rem;
-        }
-
-        @media (max-width: 480px) {
-            .points-counter {
-                font-size: 0.7rem !important;
-                padding: 0.5rem !important;
-                white-space: normal !important;
-                line-height: 1.4;
-                /* Add these from first version */
-                flex-wrap: wrap;
-                gap: 0.3rem;
-                text-align: center;
-            }
-
-            .points-counter span {
-                display: inline-block;
-                min-width: 2.2em;
-                padding: 0 0.2em;
-                background: rgba(255, 255, 255, 0.9);
-                border-radius: 3px;
-            }
-
-            .points-counter::before {
-                content: " ";
-                flex-basis: 100%;
-            }
-        }
-
-        @media (max-width: 340px) {
-            .points-counter {
-                font-size: 0.6rem !important;
-                padding: 0.4rem !important;
-            }
+        .file-actions .nes-btn {
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            min-width: 120px; /* Give buttons some width */
         }
 
 
-        /* Arcade-style Notification */
-        .mobile-alert.arcade-style {
+        /* Mobile Alert */
+        .mobile-alert {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
             background: #1a1a1a;
-            border: 3px solid #ffd700;
-            border-radius: 8px;
+            border: 3px solid #ffd700; /* Gold border */
+            border-radius: 0; /* NES style */
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            color: #ffd700;
+            color: #ffd700; /* Gold text */
             font-family: 'Press Start 2P', cursive;
-            padding: 15px 25px;
-            text-transform: uppercase;
-            width: 80%;
+            padding: 1.5rem;
             text-align: center;
-            animation: glow 1.5s infinite alternate;
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+            font-size: 1rem;
+            animation: alertGlow 1.5s infinite alternate;
         }
 
-        .mobile-alert.arcade-style::before {
-            content: '🕹️';
+        .mobile-alert::before {
+            content: '⚠️';
             display: block;
             font-size: 2rem;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
         }
 
-        .mobile-alert.arcade-style .close-btn {
-            background: #ff0000;
-            border: 2px solid #000;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            font-size: 0.8rem;
+        .mobile-alert .close-btn {
             position: absolute;
             top: -10px;
             right: -10px;
+            width: 30px;
+            height: 30px;
+            padding: 0; /* Remove default padding */
+            font-size: 1.5rem;
+            line-height: 28px; /* Center icon vertically */
+            border-radius: 50%;
             box-shadow: 2px 2px 0 #000;
-            transition: all 0.2s ease;
         }
 
-        .mobile-alert.arcade-style .close-btn:hover {
-            transform: scale(1.1) rotate(90deg);
-            background: #ff4444;
+         @keyframes alertGlow {
+            from { box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
+            to { box-shadow: 0 0 16px rgba(255, 215, 0, 0.6); }
         }
 
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+
+        /* Responsive Adjustments */
+        @media (min-width: 480px) {
+            html {
+                font-size: 11px; /* Slightly larger base on wider screens */
             }
-            to {
-                box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-                text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            body {
+                padding: 2rem;
+            }
+            .points-counter {
+                font-size: 1.4rem;
+            }
+            #loops-container {
+                 /* Two columns on slightly wider screens */
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+             #no-loops-message {
+                /* Ensure it spans correctly if grid has columns */
+                grid-column: 1 / -1;
+            }
+            .main-title {
+                 font-size: 2.4rem;
+            }
+            .title-icon {
+                font-size: 3rem;
             }
         }
 
-        /* CRT Screen Effect */
-        .mobile-alert.crt-style {
-            background: #000;
-            color: #0f0;
-            border: 3px solid #0f0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mobile-alert.crt-style::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                rgba(0, 255, 0, 0.1) 50%,
-                rgba(0, 0, 0, 0.25) 50%
-            );
-            background-size: 100% 4px;
-            pointer-events: none;
-            animation: scanline 2s linear infinite;
-        }
-
-        @keyframes scanline {
-            from { background-position: 0 0; }
-            to { background-position: 0 100%; }
+        @media (min-width: 768px) {
+             html {
+                font-size: 12px;
+             }
+            .container {
+                 max-width: 800px; /* Wider container for desktop */
+             }
+             .game-header {
+                flex-direction: row; /* Side-by-side on larger screens */
+                justify-content: space-between;
+                align-items: center;
+            }
+            #loops-container {
+                /* Potentially 3 columns on desktop if space allows */
+                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
         }
 
     </style>
 </head>
 <body>
 
-  <div class="mobile-alert crt-style" style="display: none;">
-      <span>Tip: Switch to landscape mode for better visibility!</span>
-      <button class="close-btn nes-btn is-error" onclick="dismissAlert()">⏻</button>
+  <!-- Mobile Orientation Alert -->
+  <div class="mobile-alert">
+      <span>Rotate device to Landscape for optimal view!</span>
+      <button class="close-btn nes-btn is-error" onclick="dismissAlert()">X</button>
   </div>
 
     <div class="container">
+        <!-- Header -->
         <header class="game-header">
             <div class="title-container">
-                <span class="title-icon">🎮</span>
+                <span class="title-icon">⚔️</span>
                 <h1 class="main-title">LIFE LOOPS</h1>
             </div>
-            <div class="points-counter nes-balloon from-left">
-                ⭐ Daily: <span id="dailyPoints">0</span>/10 | Total: <span id="totalPoints">0</span>
+            <div class="points-counter">
+                <i class="nes-icon star is-medium"></i> D: <span id="dailyPoints">0</span>/10 | <i class="nes-icon trophy is-medium"></i> T: <span id="totalPoints">0</span>
             </div>
         </header>
 
         <!-- Add Loop -->
-        <div class="nes-container is-rounded section-spacing">
+        <section class="nes-container with-title is-dark add-loop-section">
+            <p class="title">➕ Create New Loop</p>
             <div class="nes-field">
-                <input type="text" id="loopInput" class="nes-input" placeholder="Enter new habit loop">
-                <select id="loopType" class="nes-select">
-                    <option value="positive">✅ Positive Loop</option>
-                    <option value="negative">❌ Negative Loop</option>
-                </select>
-                <button class="nes-btn is-success" onclick="addLoop()">➕ Add Loop</button>
+                <label for="loopInput">Loop Name:</label>
+                <input type="text" id="loopInput" class="nes-input is-dark" placeholder="e.g., Morning Run">
             </div>
-        </div>
+             <div class="nes-field">
+                <label for="loopType">Loop Type:</label>
+                <div class="nes-select is-dark">
+                    <select required id="loopType"> <!-- Added required for basic validation -->
+                        <option value="positive" selected>✅ Positive</option>
+                        <option value="negative">❌ Negative</option>
+                    </select>
+                 </div>
+            </div>
+            <button class="nes-btn is-success" onclick="addLoop()">Add Loop</button>
+        </section>
 
-        <!-- Loop Table -->
-        <div class="nes-container with-title is-rounded section-spacing">
-            <p class="title">🔄 Active Loops</p>
-            <div class="nes-table-responsive">
-                <table class="nes-table is-bordered is-centered" id="loopTable">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Loop Name</th>
-                            <th>History</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="loopTableBody">
-                        <!-- Loops will be dynamically added here -->
-                    </tbody>
-                </table>
+        <!-- Active Loops (Cards) -->
+        <section class="nes-container with-title is-dark">
+             <p class="title">🔄 Active Loops</p>
+             <div id="loops-container">
+                <!-- Loop cards will be dynamically added here -->
+                <p id="no-loops-message">No active loops yet. Add one above!</p>
             </div>
-        </div>
+        </section>
 
         <!-- Stats -->
-        <div class="nes-container with-title is-rounded">
+        <section class="nes-container with-title is-dark stats-section">
             <p class="title">📊 Game Stats</p>
-            <div class="nes-table-responsive">
-                <table class="nes-table is-bordered">
-                    <tr>
-                        <td>🔥 Current Streak</td>
-                        <td id="streak">0 days</td>
-                    </tr>
-                    <tr>
-                        <td>✅ Positive Loops</td>
-                        <td id="positiveCount">0</td>
-                    </tr>
-                    <tr>
-                        <td>❌ Negative Loops</td>
-                        <td id="negativeCount">0</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+            <dl class="stats-list">
+                <div><dt>🔥 Overall Streak:</dt><dd id="streak">0 days</dd></div>
+                <div><dt>✅ Positive Loops:</dt><dd id="positiveCount">0</dd></div>
+                <div><dt>❌ Negative Loops:</dt><dd id="negativeCount">0</dd></div>
+                <!-- Add more stats here if needed -->
+            </dl>
+        </section>
 
         <!-- Import/Export Buttons -->
-        <div class="small-btns">
-            <button class="nes-btn is-warning small-btn" onclick="document.getElementById('importInput').click()">
+        <div class="file-actions">
+            <button class="nes-btn is-warning" onclick="document.getElementById('importInput').click()">
                 📥 Import
             </button>
-            <button class="nes-btn is-primary small-btn" onclick="exportCSV()">
+            <button class="nes-btn is-primary" onclick="exportCSV()">
                 📤 Export
             </button>
             <input type="file" id="importInput" hidden accept=".csv" onchange="importCSV(event)">
         </div>
+
     </div>
 
-
     <script>
-    // Indian Time Zone Helper
+    // --- State Management & Core Logic (Mostly Unchanged) ---
     const getIndianTime = () => {
-        const offset = 5.5 * 60 * 60 * 1000; // IST offset (5h 30m)
-        return new Date(Date.now() + offset);
+        const now = new Date();
+        const offset = 5.5 * 60 * 60 * 1000;
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        return new Date(utc + offset);
+    };
+
+     const getTodayDateString = () => {
+        // Ensures format is always YYYY-MM-DD
+         const date = getIndianTime();
+         const year = date.getFullYear();
+         const month = String(date.getMonth() + 1).padStart(2, '0');
+         const day = String(date.getDate()).padStart(2, '0');
+         return `${year}-${month}-${day}`;
     };
 
     let state = {
@@ -461,141 +505,389 @@
         dailyLog: JSON.parse(localStorage.getItem('dailyLog')) || [],
         totalPoints: parseInt(localStorage.getItem('totalPoints')) || 0,
         streak: parseInt(localStorage.getItem('streak')) || 0,
-        lastUpdated: localStorage.getItem('lastUpdated') || ''
+        lastUpdatedDate: localStorage.getItem('lastUpdatedDate') || null // Store only the date
     };
 
-    const audio = {
-        positive: new Audio('https://assets.mixkit.co/active_storage/sfx/257/257-preview.mp3'),
-        negative: new Audio('https://assets.mixkit.co/active_storage/sfx/259/259-preview.mp3'),
-        achievement: new Audio('https://assets.mixkit.co/active_storage/sfx/2958/2958-preview.mp3')
-    };
+    // Simple audio cache to avoid reloading
+    const audioCache = {};
+    function playSound(type) {
+        const urls = {
+             positive: 'https://assets.mixkit.co/active_storage/sfx/257/257-preview.mp3', // Coin/Success (used for COMPLETING positive)
+             negative: 'https://assets.mixkit.co/active_storage/sfx/259/259-preview.mp3', // Fail/Error (used for COMPLETING negative AND ADDING negative)
+             achievement: 'https://assets.mixkit.co/active_storage/sfx/2958/2958-preview.mp3', // Level up/Big win (used for export/import)
+             add: 'https://assets.mixkit.co/active_storage/sfx/103/103-preview.mp3', // UI interaction sound (used for ADDING positive)
+             delete: 'https://assets.mixkit.co/active_storage/sfx/168/168-preview.mp3' // Item removal sound
+        };
+        if (!urls[type]) return;
+
+        // Create audio object if not cached
+        if (!audioCache[type]) {
+            audioCache[type] = new Audio(urls[type]);
+            audioCache[type].volume = 0.6; // Adjusted volume slightly
+        }
+
+        // Play the sound
+        audioCache[type].currentTime = 0; // Rewind to start
+        audioCache[type].play().catch(e => console.error(`Audio playback failed for type "${type}":`, e));
+    }
 
     function saveState() {
-        localStorage.setItem('loops', JSON.stringify(state.loops));
-        localStorage.setItem('dailyLog', JSON.stringify(state.dailyLog));
-        localStorage.setItem('totalPoints', state.totalPoints);
-        localStorage.setItem('streak', state.streak);
-        localStorage.setItem('lastUpdated', state.lastUpdated);
+        try {
+            localStorage.setItem('loops', JSON.stringify(state.loops));
+            localStorage.setItem('dailyLog', JSON.stringify(state.dailyLog));
+            localStorage.setItem('totalPoints', state.totalPoints);
+            localStorage.setItem('streak', state.streak);
+            localStorage.setItem('lastUpdatedDate', state.lastUpdatedDate);
+        } catch (error) {
+            console.error("Error saving state to localStorage:", error);
+            // Maybe notify user that data couldn't be saved
+        }
     }
 
-    // Notification System Functions
-    function isMobile() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // --- UI Update & Rendering ---
+
+    function updateUI() {
+        const today = getTodayDateString();
+        // Ensure streak calculation happens *before* display
+        updateStreak(today);
+
+        const todayData = state.dailyLog.find(d => d.date === today) || { points: 0, positive: 0, negative: 0 };
+
+        // Update Header/Stats elements
+        document.getElementById('dailyPoints').textContent = todayData.points;
+        document.getElementById('totalPoints').textContent = state.totalPoints;
+        document.getElementById('streak').textContent = `${state.streak} day${state.streak === 1 ? '' : 's'}`; // Correct pluralization
+        document.getElementById('positiveCount').textContent = state.loops.filter(l => l.type === 'positive').length;
+        document.getElementById('negativeCount').textContent = state.loops.filter(l => l.type === 'negative').length;
+
+        // Render the loop cards
+        renderLoopCards(today);
+
+        // Check mobile orientation alert
+        checkOrientation();
     }
 
-    function checkOrientation() {
-        const alert = document.querySelector('.mobile-alert');
-        if (isMobile() && window.innerHeight > window.innerWidth) {
-            alert.style.display = 'block';
+    function renderLoopCards(today) {
+        const container = document.getElementById('loops-container');
+        const noLoopsMessage = document.getElementById('no-loops-message');
+        if (!container || !noLoopsMessage) {
+             console.error("Loop container or message element not found!");
+             return;
+        }
+        container.innerHTML = ''; // Clear existing cards
+
+        if (state.loops.length === 0) {
+            noLoopsMessage.style.display = 'block'; // Show the message
         } else {
-            alert.style.display = 'none';
+            noLoopsMessage.style.display = 'none'; // Hide the message
+
+            // Sort loops maybe? Optional: e.g., by creation date or name
+             state.loops.sort((a, b) => a.created.localeCompare(b.created)); // Example sort by creation date
+
+            state.loops.forEach(loop => {
+                const card = document.createElement('div');
+                card.className = `nes-container is-rounded loop-card is-${loop.type}`; // Add type class for styling
+                card.dataset.loopId = loop.id;
+
+                const loopStreak = calculateLoopStreak(loop.completions, today);
+                const isCompletedToday = loop.completions.includes(today);
+
+                // Limit displayed history, show most recent first
+                const historyDates = loop.completions
+                    .slice(-5) // Show last 5
+                    .sort((a, b) => b.localeCompare(a)) // Sort descending 'YYYY-MM-DD'
+                    .map(d => {
+                        // Format date like 'DD Mon' e.g., '23 Jul'
+                        const dateObj = new Date(d + 'T00:00:00Z'); // Treat as UTC date for consistency
+                        const displayDate = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short'});
+                        return `<span class="nes-badge ${d === today ? 'is-primary' : 'is-dark'}"><span class="${d === today ? 'is-primary' : 'is-dark'}">${displayDate}</span></span>`;
+                     })
+                    .join(' ');
+
+                card.innerHTML = `
+                    <div class="loop-card-header">
+                        <span class="loop-card-title">${loop.name}</span>
+                        <span class="loop-card-type">${loop.type === 'positive' ? '✅' : '❌'}</span>
+                    </div>
+                    <div class="loop-card-body">
+                        <div class="loop-streak">
+                            🔥 Streak: <strong>${loopStreak} day${loopStreak === 1 ? '' : 's'}</strong>
+                        </div>
+                        <div class="loop-history">
+                             History: ${historyDates || '<em style="color:#777;">None yet</em>'}
+                        </div>
+                    </div>
+                    <div class="loop-card-actions">
+                        <button
+                            class="nes-btn ${isCompletedToday ? 'is-disabled' : 'is-success'}"
+                            ${isCompletedToday ? 'disabled' : ''}
+                            onclick="completeLoop(${loop.id}, this)">
+                            ${isCompletedToday ? 'DONE!' : '✔️'}
+                        </button>
+                        <button class="nes-btn is-error" onclick="deleteLoop(${loop.id})">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
     }
 
-    function dismissAlert() {
-        document.querySelector('.mobile-alert').style.display = 'none';
-        localStorage.setItem('landscapeAlertDismissed', 'true');
-    }
+    // --- Core Actions ---
 
-    // Initialization Code
-    document.addEventListener('DOMContentLoaded', function() {
-        updateUI();
-
-        if (!localStorage.getItem('landscapeAlertDismissed')) {
-            checkOrientation();
-        }
-
-        window.addEventListener('pageshow', function(event) {
-            if (localStorage.getItem('landscapeAlertDismissed')) {
-                document.querySelector('.mobile-alert').style.display = 'none';
-            }
-        });
-    });
-
-    // Event Listeners for Orientation Changes
-    window.addEventListener('resize', checkOrientation);
-    window.addEventListener('orientationchange', checkOrientation);
-
-    // Rest of Application Functions (unchanged)
     function addLoop() {
         const input = document.getElementById('loopInput');
-        const type = document.getElementById('loopType').value;
+        const typeSelect = document.getElementById('loopType');
+        const name = input.value.trim();
+        const type = typeSelect.value;
 
-        if (!input.value.trim()) return;
-
-        const newLoop = {
-            id: Date.now(),
-            name: input.value.trim(),
-            type: type,
-            created: getIndianTime().toISOString(),
-            completions: []
-        };
-
-        state.loops.push(newLoop);
-        const today = getIndianTime().toISOString().split('T')[0];
-
-        if (state.lastUpdated === today) {
-            state.streak++;
-        } else {
-            state.streak = 1;
+        if (!name) {
+            alert('Please enter a name for your loop!');
+            input.focus();
+            return;
         }
 
-        state.lastUpdated = today;
-        audio[type].play();
-        if (type === 'positive') confetti({ particleCount: 100, spread: 70 });
+        const newLoop = {
+            id: Date.now(), // Simple unique ID
+            name: name,
+            type: type,
+            created: getIndianTime().toISOString(),
+            completions: [] // Array of date strings 'YYYY-MM-DD'
+        };
 
-        input.value = '';
+        // Add to state
+        state.loops.push(newLoop);
+
+        // ***FIX: Play sound based on type***
+        if (type === 'positive') {
+            playSound('add'); // Neutral UI sound for adding positive
+        } else {
+            playSound('negative'); // Negative sound when adding a negative loop
+        }
+
+        input.value = ''; // Clear input
+
+        // Save state *after* modification
         saveState();
-        updateUI();
+
+        // Update the UI *after* saving state
+        updateUI(); // This call re-renders the cards, showing the new one
+
+         // Optional: Scroll to the bottom or to the new card (might need fine-tuning)
+         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
-    function completeLoop(id) {
+    function completeLoop(id, buttonElement) {
         const loop = state.loops.find(l => l.id === id);
-        const today = getIndianTime().toISOString().split('T')[0];
+        if (!loop) {
+            console.error(`Loop with id ${id} not found.`);
+            return;
+        }
+
+        const today = getTodayDateString();
 
         if (!loop.completions.includes(today)) {
             loop.completions.push(today);
-            updateDailyPoints(today, loop.type);
+            updateDailyPoints(today, loop.type); // Update points *before* saving
+
+            // Play sound & effect based on type
+            playSound(loop.type); // 'positive' or 'negative' sound for completion
+            if (loop.type === 'positive') {
+                confetti({
+                    particleCount: 80,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            // Disable button immediately for visual feedback
+            if(buttonElement){
+                buttonElement.classList.remove('is-success');
+                buttonElement.classList.add('is-disabled');
+                buttonElement.textContent = 'DONE!';
+                buttonElement.disabled = true;
+            }
+
+            // Save and update UI
             saveState();
-            updateUI();
+            updateUI(); // Update everything including streaks and points display
         }
     }
 
-    function updateDailyPoints(date, type) {
+     function updateDailyPoints(date, typeCompleted) {
         let dailyEntry = state.dailyLog.find(entry => entry.date === date);
 
         if (!dailyEntry) {
-            dailyEntry = { date, positive: 0, negative: 0, points: 0 };
+            dailyEntry = { date: date, positive: 0, negative: 0, points: 0 };
             state.dailyLog.push(dailyEntry);
+            // Keep dailyLog sorted by date
+             state.dailyLog.sort((a, b) => a.date.localeCompare(b.date));
         }
 
-        if (type === 'positive') dailyEntry.positive++;
-        else dailyEntry.negative++;
+        // Increment count for the type completed
+        if (typeCompleted === 'positive') dailyEntry.positive++;
+        else if (typeCompleted === 'negative') dailyEntry.negative++;
 
-        const total = dailyEntry.positive + dailyEntry.negative;
-        dailyEntry.points = total > 0 ? Math.min(Math.round((dailyEntry.positive / total) * 10), 10) : 0;
+        // Recalculate points for the day
+        const totalCompletionsToday = dailyEntry.positive + dailyEntry.negative;
+        let pointsEarnedToday = 0;
+        if (totalCompletionsToday > 0) {
+            pointsEarnedToday = Math.min(Math.max(0, Math.round((dailyEntry.positive / totalCompletionsToday) * 10)), 10);
+        }
+        dailyEntry.points = pointsEarnedToday;
+
+        // Recalculate total points (sum of all daily points)
         state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
+
+        // No saveState() here, it's called after this in completeLoop/etc.
     }
 
+
     function deleteLoop(id) {
+         if (!confirm('Are you sure you want to delete this loop and its history? This cannot be undone.')) {
+            return;
+        }
         state.loops = state.loops.filter(l => l.id !== id);
+        playSound('delete'); // Play delete sound
         saveState();
         updateUI();
     }
 
+    // --- Streak Calculation ---
+    function updateStreak(today) {
+        // Find the latest date a log entry exists
+        const lastLoggedDateStr = state.dailyLog.length > 0
+            ? state.dailyLog[state.dailyLog.length - 1].date // Assumes dailyLog is sorted
+            : null;
+
+        if (!lastLoggedDateStr) {
+             state.streak = 0; // No logs ever
+             state.lastUpdatedDate = null; // Clear last updated date
+             return; // Exit early
+        }
+
+        const lastLogDate = new Date(lastLoggedDateStr + 'T00:00:00Z');
+        const todayDate = new Date(today + 'T00:00:00Z');
+        const diffTime = todayDate - lastLogDate;
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24)); // Use Math.round for robustness
+
+        if (diffDays === 0) {
+             // Logged today, potentially continuing streak.
+             // If lastUpdatedDate is yesterday, increment streak. If it's today, streak stays same. If older, reset based on that gap.
+             if (state.lastUpdatedDate) {
+                 const lastUpdate = new Date(state.lastUpdatedDate + 'T00:00:00Z');
+                 const diffSinceUpdate = Math.round((todayDate - lastUpdate) / (1000 * 60 * 60 * 24));
+                 if (diffSinceUpdate === 1) {
+                     state.streak++; // Increment streak
+                 } else if (diffSinceUpdate > 1) {
+                     state.streak = 1; // Reset streak
+                 }
+                 // if diffSinceUpdate === 0, streak doesn't change
+             } else {
+                 state.streak = 1; // First log entry ever today
+             }
+             state.lastUpdatedDate = today; // Update the last processed date
+
+        } else if (diffDays === 1) {
+            // Last log was yesterday. If user logs something *today*, streak will continue/increment.
+            // We display the current streak, which depends on state.lastUpdatedDate.
+             if (state.lastUpdatedDate === lastLoggedDateStr) {
+                 // Streak was valid up to yesterday. Display current value.
+             } else {
+                 // state.lastUpdatedDate is older than yesterday, streak already broken.
+                 state.streak = 0;
+             }
+            // Don't update state.lastUpdatedDate yet, wait for a log today.
+
+        } else if (diffDays > 1) {
+            // Last log was more than 1 day ago. Streak is broken.
+            state.streak = 0;
+            // Don't update state.lastUpdatedDate yet.
+        } else {
+             // diffDays < 0 implies a future date in logs? Reset streak.
+             console.warn("Log entry found with future date:", lastLoggedDateStr);
+             state.streak = 0;
+             state.lastUpdatedDate = null; // Reset last updated if data is weird
+        }
+
+        // Final safety check
+        if (state.streak < 0) state.streak = 0;
+
+        // No saveState() here, called after updateUI potentially.
+    }
+
+
+    function calculateLoopStreak(completions, today) {
+        if (!completions || completions.length === 0) return 0;
+
+        // Ensure dates are sorted descending for easier checking
+        const sortedDates = [...completions].sort((a, b) => b.localeCompare(a)); // Sort 'YYYY-MM-DD' strings
+
+        let currentStreak = 0;
+        let expectedDateStr = today;
+
+        for (let i = 0; i < sortedDates.length; i++) {
+            if (sortedDates[i] === expectedDateStr) {
+                currentStreak++;
+                // Calculate the previous day string
+                const currentDate = new Date(expectedDateStr + 'T00:00:00Z');
+                currentDate.setDate(currentDate.getDate() - 1);
+                expectedDateStr = currentDate.toISOString().split('T')[0];
+            } else {
+                 // If the most recent completion wasn't today OR yesterday (relative to the loop), the streak is 0 starting now.
+                 // But if the loop started checking from yesterday, and found it, it should continue back.
+                 // This logic needs to handle the very first check carefully.
+
+                 // If we are on the first check (i=0) and it's not today
+                 if (i === 0) {
+                     // Check if it was yesterday
+                     const yesterday = new Date(today + 'T00:00:00Z');
+                     yesterday.setDate(yesterday.getDate() - 1);
+                     const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+                     if (sortedDates[i] === yesterdayStr) {
+                         currentStreak = 1; // Streak starts from yesterday
+                         // Calculate day before yesterday
+                         const dayBeforeYesterday = new Date(yesterdayStr + 'T00:00:00Z');
+                         dayBeforeYesterday.setDate(dayBeforeYesterday.getDate() - 1);
+                         expectedDateStr = dayBeforeYesterday.toISOString().split('T')[0];
+                         // Continue to the next iteration of the loop
+                         continue;
+                     } else {
+                          // Most recent completion is older than yesterday, so current streak is 0
+                         return 0;
+                     }
+                 } else {
+                    // If the gap occurs after the first match, the streak ends here.
+                    break;
+                 }
+            }
+        }
+        return currentStreak;
+    }
+
+
+    // --- Import / Export ---
     function exportCSV() {
+        // (Keep existing exportCSV function - it seemed okay)
         let csvContent = "data:text/csv;charset=utf-8,";
         csvContent += "LIFE LOOPS DATA EXPORT\n";
         csvContent += `Exported At,${getIndianTime().toISOString()}\n\n`;
+
         csvContent += "SUMMARY\n";
         csvContent += `Total Points,${state.totalPoints}\n`;
-        csvContent += `Current Streak,${state.streak} days\n`;
-        csvContent += `Last Updated,${state.lastUpdated}\n\n`;
-        csvContent += "ACTIVE LOOPS\nID,Type,Name,Created Date,Completion Dates\n";
+        csvContent += `Overall Streak,${state.streak}\n`;
+        csvContent += `Last Logged Date,${state.lastUpdatedDate || 'N/A'}\n\n`;
+
+        csvContent += "ACTIVE LOOPS\n";
+        csvContent += "ID,Type,Name,Created Date,\"Completion Dates (YYYY-MM-DD)\"\n"; // Clarified header
         state.loops.forEach(loop => {
-            csvContent += `${loop.id},${loop.type.toUpperCase()},${loop.name},${loop.created},"${loop.completions.join(', ')}"\n`;
+            const completionsStr = `"${loop.completions.join(', ')}"`; // Ensure quoted
+            csvContent += `${loop.id},${loop.type},"${loop.name.replace(/"/g, '""')}",${loop.created},${completionsStr}\n`; // Handle quotes in name
         });
-        csvContent += "\nDAILY PROGRESS\nDate,✅ Positive,❌ Negative,⭐ Points (0-10)\n";
+        csvContent += "\n";
+
+        csvContent += "DAILY LOG\n";
+        csvContent += "Date,✅ Positive Count,❌ Negative Count,⭐ Daily Points (0-10)\n"; // Clarified header
         state.dailyLog.forEach(day => {
             csvContent += `${day.date},${day.positive},${day.negative},${day.points}\n`;
         });
@@ -603,132 +895,196 @@
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `life_loops_${getIndianTime().toISOString().split('T')[0]}.csv`);
+        link.setAttribute("download", `life_loops_backup_${getTodayDateString()}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        playSound('achievement'); // Sound for successful export
     }
 
     function importCSV(event) {
+        // (Keep existing importCSV function - it seemed okay)
         const file = event.target.files[0];
         if (!file) return;
 
         const reader = new FileReader();
         reader.onload = function(e) {
-            const csvData = e.target.result.split('\n');
-            const newState = { loops: [], dailyLog: [], totalPoints: 0, streak: 0, lastUpdated: '' };
+            try {
+                const csvData = e.target.result;
+                const lines = csvData.split('\n').map(line => line.trim()).filter(line => line);
 
-            let currentSection = '';
-            csvData.forEach(line => {
-                if (line.startsWith('LIFE LOOPS')) currentSection = 'header';
-                else if (line.startsWith('SUMMARY')) currentSection = 'summary';
-                else if (line.startsWith('ACTIVE LOOPS')) currentSection = 'loops';
-                else if (line.startsWith('DAILY PROGRESS')) currentSection = 'daily';
-                else if (line.trim() === '') return;
-                else {
+                const newState = { loops: [], dailyLog: [], totalPoints: 0, streak: 0, lastUpdatedDate: null };
+                let currentSection = '';
+                let headers = [];
+
+                for (const line of lines) {
+                    if (line.startsWith('LIFE LOOPS DATA EXPORT')) continue;
+                    if (line.startsWith('Exported At')) continue;
+                    if (line.startsWith('SUMMARY')) { currentSection = 'summary'; continue; }
+                    if (line.startsWith('ACTIVE LOOPS')) { currentSection = 'loops'; headers = []; continue; } // Reset headers
+                    if (line.startsWith('DAILY LOG')) { currentSection = 'daily'; headers = []; continue; } // Reset headers
+
+                    // Basic CSV parsing (handles simple quotes and commas)
+                    const values = parseCsvLine(line);
+
                     switch(currentSection) {
                         case 'summary':
-                            const [summaryKey, summaryValue] = line.split(',');
-                            if (summaryKey === 'Total Points') newState.totalPoints = parseInt(summaryValue);
-                            if (summaryKey === 'Current Streak') newState.streak = parseInt(summaryValue);
-                            if (summaryKey === 'Last Updated') newState.lastUpdated = summaryValue;
+                            const [summaryKey, summaryValue] = values;
+                            if (summaryKey === 'Total Points') newState.totalPoints = parseInt(summaryValue) || 0;
+                            if (summaryKey === 'Overall Streak') newState.streak = parseInt(summaryValue) || 0; // Import streak but it will be recalculated anyway
+                            if (summaryKey === 'Last Logged Date') newState.lastUpdatedDate = summaryValue !== 'N/A' ? summaryValue : null; // Import last logged date
                             break;
+
                         case 'loops':
-                            const [id, type, name, created, completions] = line.split(',');
-                            newState.loops.push({
-                                id: parseInt(id),
-                                type: type.toLowerCase(),
-                                name,
-                                created,
-                                completions: completions ? completions.replace(/"/g, '').split(', ').filter(d => d) : []
-                            });
+                             if (headers.length === 0 && values.includes('ID')) { // Check if it's the header row
+                                headers = values;
+                                continue;
+                            }
+                            if (values.length >= 4) { // ID, Type, Name, Created Date are minimum
+                                const completions = values[4] ? values[4].split(',').map(d => d.trim()).filter(d => d && /^\d{4}-\d{2}-\d{2}$/.test(d)) : []; // Validate date format basic
+                                newState.loops.push({
+                                    id: parseInt(values[0]) || Date.now() + Math.random(), // Fallback ID
+                                    type: values[1] && ['positive', 'negative'].includes(values[1].toLowerCase()) ? values[1].toLowerCase() : 'positive', // Validate type
+                                    name: values[2] || 'Unnamed Loop',
+                                    created: values[3] || new Date().toISOString(), // Fallback created date
+                                    completions: completions
+                                });
+                            }
                             break;
+
                         case 'daily':
-                            const [date, positive, negative, points] = line.split(',');
-                            newState.dailyLog.push({
-                                date,
-                                positive: parseInt(positive),
-                                negative: parseInt(negative),
-                                points: parseInt(points)
-                            });
+                            if (headers.length === 0 && values.includes('Date')) { // Check if it's the header row
+                                headers = values;
+                                continue;
+                             }
+                             if (values.length >= 4 && /^\d{4}-\d{2}-\d{2}$/.test(values[0])) { // Date, Positive, Negative, Points + Validate Date
+                                newState.dailyLog.push({
+                                    date: values[0],
+                                    positive: parseInt(values[1]) || 0,
+                                    negative: parseInt(values[2]) || 0,
+                                    points: parseInt(values[3]) || 0
+                                });
+                            }
                             break;
                     }
                 }
-            });
 
-            state = newState;
-            saveState();
-            updateUI();
-            alert('Data imported successfully! 🎉');
+                // Basic validation
+                if (newState.loops.length === 0 && newState.dailyLog.length === 0 && newState.totalPoints === 0) {
+                     // Allow importing empty state maybe? Or warn user?
+                     // console.warn("Imported file resulted in empty state.");
+                }
+
+                state = newState;
+                 // Sort logs after import
+                state.dailyLog.sort((a, b) => a.date.localeCompare(b.date));
+                 // Recalculate total points based on imported logs
+                state.totalPoints = state.dailyLog.reduce((sum, day) => sum + day.points, 0);
+                // Find the actual last logged date from sorted logs
+                state.lastUpdatedDate = state.dailyLog.length > 0 ? state.dailyLog[state.dailyLog.length - 1].date : null;
+                // Recalculate streak based on imported data
+                updateStreak(getTodayDateString()); // Calculate fresh streak
+
+                saveState();
+                updateUI();
+                playSound('achievement'); // Sound for success
+                alert('Data imported successfully! 🎉');
+
+            } catch (error) {
+                 console.error("Import failed:", error);
+                 alert(`Import failed: ${error.message}\nPlease ensure the CSV file is correctly formatted.`);
+                 playSound('negative');
+            } finally {
+                // Reset file input to allow importing the same file again if needed
+                event.target.value = null;
+            }
+        };
+        reader.onerror = function() {
+            alert('Failed to read the file.');
+            playSound('negative');
+             event.target.value = null;
         };
         reader.readAsText(file);
     }
 
-    function updateUI() {
-        const today = getIndianTime().toISOString().split('T')[0];
-        const todayData = state.dailyLog.find(d => d.date === today) || { points: 0 };
-
-        document.getElementById('dailyPoints').textContent = todayData.points;
-        document.getElementById('totalPoints').textContent = state.totalPoints;
-        document.getElementById('streak').textContent = `${state.streak} days`;
-        document.getElementById('positiveCount').textContent = state.loops.filter(l => l.type === 'positive').length;
-        document.getElementById('negativeCount').textContent = state.loops.filter(l => l.type === 'negative').length;
-
-        const tableBody = document.getElementById('loopTableBody');
-        tableBody.innerHTML = state.loops.map(loop => `
-            <tr>
-                <td>${loop.type === 'positive' ? '✅' : '❌'}</td>
-                <td>${loop.name}</td>
-                <td>
-                    ${loop.completions.slice(-3).map(d =>
-                        `<span class="nes-badge">
-                            <span class="is-success">${new Date(d).toLocaleDateString('en-IN')}</span>
-                        </span>`
-                    ).join('')}
-                </td>
-                <td>
-                    <div class="actions-column">
-                        <button class="nes-btn is-success" onclick="completeLoop(${loop.id})">✔️</button>
-                        <button class="nes-btn is-error" onclick="deleteLoop(${loop.id})">🗑️</button>
-                    </div>
-                </td>
-            </tr>
-        `).join('');
+    function parseCsvLine(line) {
+        // (Keep existing parseCsvLine function)
+        const values = [];
+        let currentVal = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') {
+                if (inQuotes && line[i+1] === '"') { // Handle escaped quote ""
+                    currentVal += '"';
+                    i++; // Skip next quote
+                } else {
+                    inQuotes = !inQuotes;
+                }
+            } else if (char === ',' && !inQuotes) {
+                values.push(currentVal);
+                currentVal = '';
+            } else {
+                currentVal += char;
+            }
+        }
+        values.push(currentVal); // Add the last value
+        return values.map(val => val.trim());
     }
 
 
-        // Add these new functions for mobile detection
-        function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
+    // --- Mobile Specific ---
+    function isMobile() {
+        // (Keep existing isMobile function)
+        return /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
 
-        function checkOrientation() {
-            const alert = document.querySelector('.mobile-alert');
-            if (isMobile() && window.innerHeight > window.innerWidth) {
-                alert.style.display = 'block';
-            } else {
-                alert.style.display = 'none';
+    function checkOrientation() {
+        // (Keep existing checkOrientation function)
+        const alert = document.querySelector('.mobile-alert');
+        if (!alert) return; // Guard against element not found
+
+        // Show alert only on mobile AND in portrait mode
+        if (isMobile() && window.innerHeight > window.innerWidth) {
+            if (localStorage.getItem('landscapeAlertDismissed') !== 'true') {
+                 alert.style.display = 'block';
             }
+        } else {
+            alert.style.display = 'none';
         }
+    }
 
-        function dismissAlert() {
-            document.querySelector('.mobile-alert').style.display = 'none';
-            localStorage.setItem('landscapeAlertDismissed', 'true');
-        }
+    function dismissAlert() {
+        // (Keep existing dismissAlert function)
+        const alert = document.querySelector('.mobile-alert');
+        if (alert) alert.style.display = 'none';
+        localStorage.setItem('landscapeAlertDismissed', 'true');
+    }
 
-        // Add orientation change listener
+
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initial render calls updateStreak internally
+        updateUI();
+
+        // Set up listeners
         window.addEventListener('resize', checkOrientation);
-        window.addEventListener('orientationchange', checkOrientation);
-
-        // Modify initial load section to check orientation
-        // Initial load
-        updateUI();
-        if (!localStorage.getItem('landscapeAlertDismissed')) {
-            checkOrientation();
+        if ('onorientationchange' in window) {
+            window.addEventListener('orientationchange', checkOrientation);
         }
 
-        // Initial load
-        updateUI();
+        // Handle dismissed alert state on load
+        if (localStorage.getItem('landscapeAlertDismissed') === 'true') {
+            const alert = document.querySelector('.mobile-alert');
+             if (alert) alert.style.display = 'none';
+        } else {
+             checkOrientation(); // Check initial orientation if not dismissed
+        }
+
+        // Save state after initial load/streak calculation potentially updates it
+         saveState();
+    });
+
     </script>
 </body>
 </html>
